@@ -1,58 +1,35 @@
 ---
-title: Release Notes for YOUR-PRODUCT-NAME
+title: Release Notes for New Relic Dotnet Extension Buildpack for PCF
 owner: Partners
 ---
 
-**This topic should include the Release Notes for your product. For examples, see the 
-[GCP Service Broker Release Notes](http://docs.pivotal.io/gcp-sb/release-notes.html) or the 
-[ISS Knowtify Search Analytics Release Notes](http://docs.pivotal.io/knowtify/release.html).
-When you release a new version, add new release notes to this file, keeping the older notes below.**
+These are release notes for New Relic Dotnet Extension Buildpack for PCF.
 
-These are release notes for YOUR-PRODUCT-NAME.
 
-##<a id="ver"></a> vCURRENT-VERSION-NUMBER (Ex. v1.0.1)
+## <a id="ver-1.0.1"></a> v1.0.1
 
-**Release Date:** RELEASE-DATE (Ex. October 1, 2017)
+**Public Beta Release Date:** November 8, 2018
 
 Features included in this release:
 
-* Feature one.
-* Feature two.
-* Feature three.
-
-Fixed issues in this release:
-
-* Fixed issue one.
-* Fixed issue two.
-* Fixed issue three.
-
-**When you have fixed issue, you should have a corresponding known issue in the release below.**
-
-Known issues in this release:
-
-* Issue one.
-* Issue two.
-* Issue three.
+* hwc extension buildpack for support of multi-buildpack approach
+* added cached version of dotnet core buildpack
+* hwc extension supports **Windows 2012 R2, and 2016**
+* dotnet core extension supports **ubuntu trusty and xenial**
+* code improvements in hwc and dotnet core extension buildpacks
+* both hwc and dotnet core buildpacks support following ways to bind to new relic agent:
+	* New Relic license environment variable
+	* New Relic service broker
+	* New Relic User-Provided-Services
+	* New Relic agent confuration file
 
 
-##<a id="ver"></a> vPREVIOUS-VERSION-NUMBER (Ex. v1.0.0)
+## <a id="ver-0.2.14"></a> v0.2.14
 
-**Release Date:** RELEASE-DATE (Ex. August 1, 2017)
+**Initial Private Beta Release Date:** June 20, 2018
 
 Features included in this release:
 
-* Feature one.
-* Feature two.
-* Feature three.
-
-Fixed issues in this release:
-
-* Fixed issue one.
-* Fixed issue two.
-* Fixed issue three.
-
-Known issues in this release:
-
-* Issue one.
-* Issue two.
-* Issue three.
+* hwc buildpack with newrelic support
+* hwc buildpack cached with newrelic support
+* dotnet core multi-buildpack extension buildpack
