@@ -1,51 +1,51 @@
 ---
-title: Installing and Configuring New Relic Dotnet Extension Buildpack
+title: Installing and Configuring New Relic Dotnet Extension Buildpack for PCF
 owner: Partners
 ---
 
-This topic describes how to the installation and configuration of New Relic Dotnet Extension Buildpack(s) for Pivotal Cloud Foundry (PCF).
+This topic describes how to install and configure New Relic Dotnet Extension Buildpack for Pivotal Cloud Foundry (PCF).
 
-You can either install the buildpacks as a tile in Ops Manager, or push them individually as a separate buildpacks using CF CLI.
+You can either install the buildpacks as a tile in Ops Manager, or push them individually as separate buildpacks using the CF CLI.
 
 
-## <a id='install-opsmgr'></a> Install and Configure Dotnet Extension as a Tile in Ops Manager
+## <a id='install-opsmgr'></a> Install and Configure New Relic Dotnet Extension Buildpack for PCF in Ops Manager
 
-1. Download the latest version of the tile (currently **"newrelic-dotnet-buildpack-1.0.1.pivotal"**) from [PivNet](https://network.pivotal.io/products/newrelic-dotnet-buildpack), or from New Relic's github repo under [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/releases).
-1. Navigate to Ops Manager Installation Dashboard and click **Import a Product** to upload the product file.
+1. Download the latest version of the tile from [Pivotal Network (PivNet)](https://network.pivotal.io/products/newrelic-dotnet-buildpack), or from New Relic's github repo under [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/releases).
+1. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file.
 1. Under the **Import a Product** button, click the **"+"** sign next to the version number of **New Relic Dotnet Buildpack for PCF**. This adds the tile to your staging area.
-1. Click the newly added **New Relic Dotnet Buildpack for PCF** tile.
-1. Install and configure the tile in OpsMgr. you can accept the default values and install all 4 buildpacks in your PCF foundation, or in **Tile Configuration->New Relic Buildpack Selection** you could select the checkbox for any of the buildpacks that you wish to install.
+1. Click the newly added **New Relic Dotnet Extension Buildpack for PCF** tile.
+1. Configure the tile according to your needs. You can accept the default values to install all 4 buildpacks in your PCF foundation, or in **Tile Configuration->New Relic Buildpack Selection** you can select the checkbox for each of the buildpacks that you wish to install.
 1. If you make any configuration changes, click the **"Save"** button on each tab at the bottom of the page.
-1. Go to **Installation UI** of OpsMgr.
-1. Click on the blue button on top right of the installation UI to **Apply changes**.
+1. In the **Installation UI** of Ops Manager, click on the blue button in top right to **Apply changes**.
 
 <br/>
 
-## <a id='install-buildpack'></a> Install and Configure Dotnet Extension with CF CLI
+## <a id='install-buildpack'></a> Install and Configure New Relic Dotnet Extension Buildpack for PCF via the CF CLI
 
-If you do not wish to install the tile, you could alternatively unzip the downloaded **.pivotal** file, and install the buildpack(s) which you need using CF CLI command **"cf create-buildpack ..."**.
+If you do not wish to install the tile, you can alternatively unzip the downloaded **.pivotal** file, and install only the 
+buildpack(s) you need using the CF CLI command **"cf create-buildpack ..."**.
 
-1. Unzip **"newrelic-dotnet-buildpack-tile-*.pivotal"** into a separate subdirectory<br/>
+1. Unzip **"newrelic-dotnet-buildpack-*.pivotal"** into a separate subdirectory<br/>
 ```
-unzip newrelic-dotnet-buildpack-tile-*.pivotal -d buildpack_tile
+unzip newrelic-dotnet-buildpack-*.pivotal -d buildpack_tile
 ```
 
-1. Change directory to buildpack_tile/releases<br/>
+1. Change directory into buildpack_tile/releases<br/>
 ```
 cd buildpack_tile/releases
 ```
 
-1. Create a subdirectory (i.e. tmp)<br/>
+1. Create a new subdirectory (i.e. tmp)<br/>
 ```
 mkdir tmp
 ```
 
-1. Extract the **.tgz** file in releases folder into the **tmp** directory<br/>
+1. Extract the **.tgz** file in the releases folder into the **tmp** directory<br/>
 ```
 tar xvf newrelic-dotnet-buildpack-tile-*.tgz -C tmp
 ```
 
-1. Change directory to **tmp/packages**<br/>
+1. Change directory into **tmp/packages**<br/>
 ```
 cd tmp/packages
 ```
@@ -71,7 +71,10 @@ cf create-buildpack <BUILDPACK_NAME> <ZIPPED_BUILDPACK_NAME.zip> 99
 
 
 ### <a id='build'></a> Build
-The buildpacks in this tile are already built and ready to be used in Cloud Foundry. However, if you'd like to make changes to the buildpack, or update the cahced version of any buildpacks with newer version of dependencies, you could build your own copy. Please follow the instructions below to build your own copy of the buildpack(s):
+The buildpacks in this tile are already built and ready to be used in Cloud Foundry. 
+However, if you'd like to make changes to the buildpack, or update the cached version of the buildpack(s) 
+with a newer version of dependencies, you can build your own copy. 
+Follow the instructions below to build your own copy of the buildpack(s):
 
 1. Clone the buildpack repo to your system<br/>
 ``` 
@@ -79,7 +82,7 @@ git clone https://github.com/newrelic/newrelic-dotnetcore-extension-buildpack
 or https://github.com/newrelic/newrelic-hwc-extension-buildpack
 ```
 
-1. Change directory to the cloned buildpack
+1. Change directory into the cloned buildpack
 
 1. Source the **.envrc** file in the buildpack directory.
 ```
@@ -100,8 +103,8 @@ buildpack-packager build [ --cached ] -any-stack
 <br/>
 ### <a id='deploy'></a> Deploy
 
-To deploy and use the buildpack in Cloud Foundry
-Upload the buildpack to your Cloud Foundry and optionally specify it by name usinf CF CLI
+To deploy and use the buildpack in Cloud Foundry.
+Upload the buildpack to your Cloud Foundry and optionally specify it by name using the CF CLI:
 
 ```
 cf create-buildpack [NEWRELIC_DOTNET_CORE_EXTENSION_BUILDPACK] [BUILDPACK_ZIP_FILE_PATH] 99
