@@ -234,93 +234,115 @@ To bind your app with the New Relic Dotnet tile, do one of the following:
 	cf push
 	```
 
-### <a id='envvar-and-nrconfig'></a>Using Environment Variables and Agent Configuration
+## <a id='envvar-and-nrconfig'></a>Using Environment Variables and Agent Configuration
 
-* You can use the `newrelic.config` file or environment variables to configure the
+You can use the `newrelic.config` file or environment variables to configure the
 New Relic Dotnet Agent to report app health and performance to the designated
-New Relic account.
+New Relic account. A copy of the `newrelic.config` file is provided with the
+buildpack.
 
-	- A copy of the 'newrelic.config' file is provided with the buildpack.
-If you need to add any agent features such as proxy settings, or change any other agent settings like logging behavior,
-download the **newrelic.config** file from New Relic, place it the app folder,
-and edit as required. You can refer to [New Relic Configuration documentation](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration) for details on what properties are available. The following are some examples you can use:
+If you need to add any agent features such as proxy settings
+or change any other agent settings like logging behavior,
+download the `newrelic.config` file from New Relic, place it the app folder,
+and edit as required. For more information about what properties are available, see
+[New Relic Configuration documentation](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration).
 
-		- **new relic license key:** Add your New Relic license key:<br/>
-			```
-			  <service licenseKey="0123456789abcdef0123456789abcdef01234567">
-			```
+The following are some examples you can use:
 
-			Alternatively, you can add the license key to app's 'manifest.yml' file as an environment variable "NEW_RELIC_LICENSE_KEY" in the "env" section
+- Add your New Relic license key:
 
+	```
+	  <service licenseKey="0123456789abcdef0123456789abcdef01234567">
+	```
 
-		- **New Relic app name:** If you want the app name in New Relic be different than the app name in PCF, add the New Relic app name as you'd like it to appear in New Relic<br/>
-	    <pre>
-			  &lt;application&gt;
-			    &lt;name&gt;My Application&lt;/name&gt;
-			  &lt;/application&gt;
-	    </pre>
-
-			Alternatively you can add the New Relic app name to the app's 'manifest.yml' file as an environment variable "NEW_RELIC_APP_NAME" in the "env" section
+	You can also add the license key to the app `manifest.yml` file as
+	an environment variable `NEW_RELIC_LICENSE_KEY` in the `env` section
 
 
-	    - **Proxy Setting:** Add proxy settings to the "service" element as a sub-element. **Example:**
-	    <pre>
-	    	  &lt;service licenseKey="0123456789abcdef0123456789abcdef01234567"&gt;
-	    	    &lt;proxy host="my_proxy_server.com" port="9090" /&gt;
-	    	  &lt;/service&gt;
-	    </pre>
+- Add New Relic app name:
+
+	If you want the app name in New Relic be different than the app name in PCF,
+	add the New Relic app name.
+
+	  ```
+		<application>
+		  <name>My Application</name>
+		<application>
+	  ```
+
+	You can also add the New Relic app name to the app `manifest.yml`
+	file as an environment variable `NEW_RELIC_APP_NAME` in the `env` section.
 
 
+- Add Proxy Settings: <br>
+You can add proxy settings to the `service` element as a sub-element.
 
-	    - **Logging Level:** Change agent logging level and destination<br/>
-	    <pre>
-	    	  &lt;log level="info" console="true" /&gt;
-	    </pre>
+```
+	  <service licenseKey="0123456789abcdef0123456789abcdef01234567">
+	    <proxy host="my_proxy_server.com" port="9090" />
+	  <service>
+```
 
-	    - **Non-IIS Executable Instrumentation:** Since for Dotnet Framework apps 'hwc.exe' is the executable
-running your app, the copy of **"newrelic.config"** file that comes with the hwc extension
+- Change Logging Level:<br>
+You can change the agent logging level and destination.
+
+```
+	  <log level="info" console="true" />
+```
+
+## <a id='non-iis'></a> Non-IIS Executable Instrumentation:<br>
+Since for Dotnet Framework apps `hwc.exe` is the executable
+running your app, the copy of `newrelic.config` file that comes with the hwc extension
 contains the proper settings to tell the executable name to the agent.
-If you provide your own **"newrelic.config"** file, make sure it contains the following tag:
-	    <pre>
-			  &lt;instrumentation&gt;
-			    &lt;applications&gt;
-			      &lt;application name="hwc.exe" /&gt;
-			    &lt;/applications&gt;
-			  &lt;/instrumentation&gt;
-		</pre>
 
-            <p class="note"><strong>Note:</strong> Depending on your CI/CD pipeline,
-               the app directory may be created on-the-fly as part of the on-the-fly as part of the
-               pipeline. If that is the case and you are modifying this file,
-               your pipeline need to copy over the file to the app directory before pushing the app to PCF.</p>
+If you provide your own `newrelic.config` file, make sure it contains the
+following tag: <br>
 
+```
+<instrumentation>
+  <applications>
+    <application name="hwc.exe" />
+  </applications>
+</instrumentation>
+```
 
-	- Push your application to PCF using this buildpack.
-          To do that, edit your manifest.yml and add/update the following entry.
-
-		<pre>
-			buildpacks:
-			- &lt;NEWRELIC_EXTENSION_BUILDPACK_NAME&gt;
-			- hwc_buildpack
-		</pre>
-
-		Then run "cf push".
-
-		**Note:** If you use Bamboo as your CI/CD pipeline tool, the "cf push" may not be required as your pipeline internally uses "cf push" to push the app to PCF.
+<p class="note"><strong>Note:</strong> Depending on your CI/CD pipeline,
+   the app directory may be created on-the-fly as part of the on-the-fly as part of the
+   pipeline. If that is the case and you are modifying this file,
+   your pipeline need to copy over the file to the app directory before pushing the app to PCF.</p>
 
 
+1. Push your application to PCF using this buildpack.
+      To do that, edit your `manifest.yml` and add the following entry.
+
+	```
+	buildpacks:
+	- NEWRELIC_EXTENSION_BUILDPACK_NAME
+	- hwc_buildpack
+	```
+
+	Where `NEWRELIC_EXTENSION_BUILDPACK_NAME` is the name of the New Relic buildpack name.
+
+1. Run `cf push`.
+
+<p class="note"><strong>Note:</strong> If you use Bamboo as your CI/CD pipeline
+	tool, <code>cf push</code> may not be required as your pipeline internally
+	uses <code>cf push</code> to push the app to PCF. </p>
 
 ### <a id='envvar-and-nrconfig'></a>Debugging
 
-* Set the **BP_DEBUG** environment variable
-	- For troubleshooting purposes, you can set **BP_DEBUG** environment variable in your app environment to get more logging during the app push.
+* Set the `BP_DEBUG` environment variable
+	- For troubleshooting purposes, you can set `BP_DEBUG` environment variable
+	in your app environment to get more logging during the app push.
 
 
 * Check the logs
-	- Use **cf logs &lt;APP_NAME&gt;** or **cf logs &lt;APP_NAME&gt; --recent**   to examine the app logs. It should display New Relic agent installation progress.
+	- Run `cf logs APP-NAME` or `cf logs APP-NAME --recent`   to examine the app logs.
+	It should display the New Relic agent installation progress.
 
 
-* Use Cloud Foundry's [**CF_TRACE**](https://docs.cloudfoundry.org/devguide/deploy-apps/troubleshoot-app-health.html#trace-cloud-controller-rest-api-calls) to get detailed information about errors and unexpected behavior.
+* Use [CF_TRACE](https://docs.cloudfoundry.org/devguide/deploy-apps/troubleshoot-app-health.html#trace-cloud-controller-rest-api-calls)
+to get detailed information about errors and unexpected behavior.
 
 
 ## <a id='examples'></a>Examples
