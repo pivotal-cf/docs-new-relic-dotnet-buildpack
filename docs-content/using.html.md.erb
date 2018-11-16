@@ -15,22 +15,22 @@ to make it easy and convenient to bind apps to a New Relic service.
 
 The buildpack extensions bind to the New Relic Dotnet agent using one of the following ways depending on the environment:
 
-1. If an environment variable named **"NEW_RELIC_DOWNLOAD_URL"** is defined in the app environment 
-(manifest file, cf set-env, or set in AppsMgr), its value is used as the location to download the agent. 
-This is used for environments where you have your own repository for downloading dependencies (i.e. Artifactory). 
-If a second environment variable called **"NEW_RELIC_DOWNLOAD_SHA256"** is set in the app environment, 
-it is expected to hold the downloaded agent's binary file SHA256 checksum. 
+1. If an environment variable named **"NEW_RELIC_DOWNLOAD_URL"** is defined in the app environment
+(manifest file, cf set-env, or set in AppsMgr), its value is used as the location to download the agent.
+This is used for environments where you have your own repository for downloading dependencies (i.e. Artifactory).
+If a second environment variable called **"NEW_RELIC_DOWNLOAD_SHA256"** is set in the app environment,
+it is expected to hold the downloaded agent's binary file SHA256 checksum.
 In this case the SHA256 checksum of the downloaded agent binary file is compared with this value, and in the case of a mismatch, the buildpack reports an error.
 
-1. You can create a cached version of the buildpack using the **"--cached"** switch with New Relic agent embedded in 
-the buildpack. This is mainly used in disconnected (isolated) environments where PCF does not have access to the 
+1. You can create a cached version of the buildpack using the **"--cached"** switch with New Relic agent embedded in
+the buildpack. This is mainly used in disconnected (isolated) environments where PCF does not have access to the
 outside world, and the buildpack cannot download the agent from New Relic's download site.
 
 1. Use a specific version of New Relic agent by specifying the version in the buildpack manifest file at the time of packaging.
 
 1. Set the version of the agent to **"0.0.0.0"**, **"latest"**, or **"current"** in buildpack manifest file to download the latest version of the agent.
 
-Except in the first case when the download URL is specified, and the sha-256 code is not available 
+Except in the first case when the download URL is specified, and the sha-256 code is not available
 the buildpack checks the SHA256 checksum of the downloaded (or copied) agent to validate the download.
 
 New Relic recommends you use the latest version of New Relic agents unless there is a reason
@@ -41,12 +41,12 @@ that keeps you from upgrading to newer releases of the agent.
 
 The order of precedence for which method to use to obtain the New Relic agent is from the top to bottom:
 
-1. If **"NEW_RELIC_DOWNLOAD_URL"** is specified, it precedes all other options. 
+1. If **"NEW_RELIC_DOWNLOAD_URL"** is specified, it precedes all other options.
 
-1. If this environment variable is not specified, the cached buildpack takes precedence. 
+1. If this environment variable is not specified, the cached buildpack takes precedence.
 
-1. Otherwise, the `version` property of the agent in the buildpack manifest is used, 
-and one of the other two options is used to download the agent, 
+1. Otherwise, the `version` property of the agent in the buildpack manifest is used,
+and one of the other two options is used to download the agent,
 depending on the value of the `version` property of the agent dependency (explicit version or "latest").
 
 
@@ -77,9 +77,9 @@ The app name for New Relic is determined in the following order:<br/><br/>
 
 ### <a id='agent-config'></a> New Relic Agent Configuration File
 
-The New Relic configuration file (**"newrelic.config"**) allows you to set a number of agent properties and change the behavior of the agent as you wish. 
-Refer to [.NET agent configuration](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration) 
-for more information on configuring the agent. You can make a copy of this file in the app's root directory, and change any of agent's settings. 
+The New Relic configuration file (**"newrelic.config"**) allows you to set a number of agent properties and change the behavior of the agent as you wish.
+Refer to [.NET agent configuration](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration)
+for more information on configuring the agent. You can make a copy of this file in the app's root directory, and change any of agent's settings.
 The buildpack looks for the agent's config file in the following order:<br/><br/>
 * App root folder<br/>
 * Buildpack folder<br/>
@@ -88,8 +88,8 @@ The buildpack looks for the agent's config file in the following order:<br/><br/
 
 ### <a id='ups'></a> New Relic User-Provided-Services
 
-If the app binds to a User-Provided-Service with the word **"newrelic"** as part of its name, 
-the buildpack injects the credentials from this service in the app environment by setting environment 
+If the app binds to a User-Provided-Service with the word **"newrelic"** as part of its name,
+the buildpack injects the credentials from this service in the app environment by setting environment
 variable for known New Relic properties. The known properties currently are:<br/><br/>
 * NEW_RELIC_LICNESE_KEY<br/>
 * NEW_RELIC_APP_NAME<br/>
@@ -98,9 +98,9 @@ variable for known New Relic properties. The known properties currently are:<br/
 
 ### <a id='proxy'></a> Use of Proxy
 
-If you're using a proxy server in your environment, you need to make a copy of the **"newrelic.config"** 
-file of the agent in the app directory, 
-and specify the [proxy information](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration#proxy) 
+If you're using a proxy server in your environment, you need to make a copy of the **"newrelic.config"**
+file of the agent in the app directory,
+and specify the [proxy information](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration#proxy)
 as a child of the **&lt;service&gt;** element.<br/>
 **Example:**<br/>
 <pre>
@@ -110,95 +110,139 @@ as a child of the **&lt;service&gt;** element.<br/>
 </pre>
 
 
-## <a id='tips-tricks'></a>Tips and Tricks
+### <a id='using-nr-agent'></a>Bind Your App to the New Relic Agent
 
-### <a id='using-nr-agent'></a>Using the New Relic Agent
+To bind your app to the New Relic service, you need to specify a New Relic
+account license key in one of the following ways:
 
-You need to specify a New Relic account **license key** in one of the following ways in order to bind your app to the New Relic service:
++ [Use a License Key Environment Variable](#using-key-env)
++ [Use a local copy of the New Relic Dotnet Agent](#using-local-copy)
++ [Use the New Relic Dotnet tile](#using-tile)
++ [Use a User-Provided Service](#using-user)
++ [Use the cf CLI](#using-cli)
 
-* **Bind your application to New Relic using a License Key**
+#### <a id='using-key-env'></a>Use a License Key Environment Variable
 
 The quickest and easiest way to bind your app to the New Relic Dotnet agent is
-using the license key environment variable (**"NEW_RELIC_LICNENSE_KEY"**) and
-set it using your New Relic account license key.
+using the license key environment variable `NEW_RELIC_LICNENSE_KEY` and
+setting it using your New Relic account license key.
+
+#### <a id='using-local-copy'></a>Use a Local Copy of the New Relic Dotnet Agent
+
+If you are in a disconnected (isolated) environment, the easiest way is to obtain
+the latest version of the New Relic Dotnet agent is through the
+[New Relic download site](http://download.newrelic.com/dot_net_agent/).
+
+You can then upload them to your local repository (i.e. Artifactory).
+In the app manifest file you can then set the `NEW_RELIC_DOWNLOAD_URL` environment
+variable to the location of the agent download.
 
 
-* **Bind your application to a local copy of New Relic Dotnet Agent**
-<br/>
-If you are in a disconnected (isolated) environment, the easiest way is to obtain the latest version of New Relic Dotnet 
-agent(s) is through the [New Relic download site](http://download.newrelic.com/dot_net_agent/). You can then upload them to your 
-local repository (i.e. Artifactory). In the app's manifest file you can then set the **"NEW_RELIC_DOWNLOAD_URL"** environment variable to the  location of the agent download.
+#### <a id='using-tile'></a>Use the New Relic Dotnet Tile
+To bind your app with the New Relic Dotnet tile, do one of the following:
+
+* From Pivotal Serivces Marketplace:
+	1. Click on **New Relic Dotnet Extension Buildpack for PCF** tile
+	1. Select the plan that is associated with your New Relic account
+	(check with PCF admin).
+	1. Specify the instance name.
+	1. If you have your app running on PCF, you can specify the app name
+	as well.
+	1. If you do not have your app running on PCF, after you push the app,
+	you can directly bind to an existing service instance (or create a new service
+	instance) from the app UI.
+	1. To create the cervice instance, click **Create**.
+	1. After the service instance is created, you can also use the `services`
+	section in your app `manifest.yml` file, and specify the name of the service
+	you just created in the marketplac.e
+	1. To restage the app, run the following command:
+
+		```
+		cf restage MY-APP
+		```
+
+		Where:
+		`MY-APP` is the name of your app.
+
+* From Apps Manager:
+	1. Push your app to PCF.
+	1. In **Apps Manager**, click on your app.
+	1. Navigate to **Service**.
+	1. If you have already created a service instance, do the following:
+		1. Select **Bind Service**.
+		1. Select the service instance you want.
+		1. Click **Bind**
+	1. If this your first time create a service instance and one does not exist,
+	do the following:
+		1. Select **New Service**.
+		1. Click on the **New Relic Dotnet Extension Buildpack for PCF service** tile.
+		1. Select the plan that is associated with your New Relic account.
+		1. Click **Select Plan**.
+		1. Specify the instance name.
+		1. Click **Create**
+	1. To restage the app, run the following command:
+
+		```
+		cf restage MY-APP
+		```
+
+		Where:
+		`MY-APP` is the name of your app.
+
+#### <a id='using-user'></a>Use a User-Provided Service
+1. Create a user-provided service with `newrelic` as part of the service name.
+1. Add the following credentials to the user-provided service:
+	+ `licenseKey`. This is the New Relic license key.
+	+ (Optional) `appName`. If you want to change the app name in New Relic
+	use this property
+1. Run the following command:
+
+	```
+	cf cups MY-NEWRELIC-SVCc -p licenseKey,appName
+	```
+
+	Where `MY-NEWRELIC-SVC` is the name of your user-provided service. <br><br>
+
+	You will be prompted to enter values for licenseKey and appName.<br><br>
+1. To push your app, do one of the following:
+	+ Before pushing your app, add the user-provided service to the app
+	`manifest.yml`.
+	+ Bind an existing service instance and then restage the app.
 
 
-* **Bind your application to New Relic using the Agent tile in the Marketplace**
-	
-	* From Marketplace:
-		- Click on New Relic Dotnet Extension Buildpack for PCF tile
-		- Select the plan that is associated with your New Relic account (check with PCF admin)
-		- Specify the instance name
-		- If you already have the app running on PCF you could specify the app name as well. Otherwise, once you push the app, you can directly bind to an existing service instance (or create a new service instance) from the app UI
-		- Click the **CREATE** button to create the service instance
+#### <a id='using-cli'></a>Use the cf CLI
+1. To create an instance of New Relic service, run the following command:
 
-		- Once the service instance is created, you can also use the "services" stanza in your app manifest.yml file, and specify the name of the service you just created in the marketplace
-		- Restage the app using **"cf restage YOUR_APPNAME"** from the command line
+	```
+	cf create-service newrelic NEWRELIC-PLAN-NAME NEWRELIC-SERVICE-INSTANCE-NAME
+	```
 
+	Where:
+	+ `NEWRELIC-PLAN-NAME` is the name of your New Relic service plan.
+	+ `NEWRELIC-SERVICE-INSTANCE-NAME` is the name of your New Relic service instance.
+1. Specify the service instnace name in the `services` section of the app
+`manifest.yml` file. Indent the section by two space.<br><br>
+ For example:
 
-	* From "Services" tab of the app in Apps Manager
-		- Push your app to PCF
-		- In Apps Manager click on your app
-		- Go to the "Services" tab of your app
-		- If you have already created a service instance:
-			- Select "BIND SERVICE".
-			- Select the desired service instance from the list
-			- Click "BIND"
-		- If you have not created any service instances, and this is the first time:
-			- Select "NEW SERVICE"
-			- Click on the New Relic Dotnet Extension Buildpack for PCF service tile
-			- Select the plan that is associated with your New Relic account
-			- Click "SELECT PLAN" button
-			- Specify the instance name
-			- Click "CREATE"
-		- "Restage" the app using **"cf restage YOUR_APPNAME"** from the command line
+	```
+		  services:
+		  - YOUR-NEWRELIC-SERVICE-INSTANCE-NAME
+	```
+1. To push the app, run the following command:
 
-
-* **Bind your application to New Relic using User-Provided-Service**
-
-	- Create a User-Provided-Service with the word "newrelic" embedded as part of the service name 
-	- Add the following credentials to the user-rpovided-service:
-		- "licenseKey" This is New Relic License Key - **REQUIRED**
-		- "appName"    If you want to change the app name in New Relic use this property - **OPTIONAL**
-		- Sample CUPS command: ```cf cups my-newrelic-svc -p "licenseKey,appName"```
-			- You will be prompted to provide values for licenseKey and appName<br/>
-	- Push your app in one of the following ways:
-		- By adding the User-Provided-Service to the app manifest.yml before pushing the app
-		- By adding the User-Provided-Service in the Apps Manager by binding an existing service instance, and restaging it after you bind the service
-
-
-* **Bind your application to New Relic using CF CLI**
-	- Create an instance of New Relic service:
-		<pre>
-			cmd: cf create-service newrelic &lt;NEWRELIC_PLAN_NAME&gt; &lt;YOUR_NEWRELIC_SERVICE_INSTANCE_NAME&gt;
-		</pre>
-	- Specify the newly created service instnace name in the **"services"** section of the app manifest (indented by two spaces):
-		<pre>
-			  services:
-			  - YOUR_NEWRELIC_SERVICE_INSTANCE_NAME
-		</pre>
-	- Push the app
-		<pre>
-			cmd: cf push<br/>
-		</pre>
-
-<br/>
+	```
+	cf push
+	```
 
 ### <a id='envvar-and-nrconfig'></a>Using Environment Variables and Agent Configuration
 
-* You can use a combination of the "newrelic.config" file and/or environment variables to configure the 
-New Relic Dotnet agent to report your app's health and performance to the designated New Relic account.
+* You can use the `newrelic.config` file or environment variables to configure the
+New Relic Dotnet Agent to report app health and performance to the designated
+New Relic account.
 
-	- A copy of the 'newrelic.config' file is provided with the buildpack. 
-If you need to add any agent features such as proxy settings, or change any other agent settings like logging behavior, 
-download the **newrelic.config** file from New Relic, place it the app folder, 
+	- A copy of the 'newrelic.config' file is provided with the buildpack.
+If you need to add any agent features such as proxy settings, or change any other agent settings like logging behavior,
+download the **newrelic.config** file from New Relic, place it the app folder,
 and edit as required. You can refer to [New Relic Configuration documentation](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration) for details on what properties are available. The following are some examples you can use:
 
 		- **new relic license key:** Add your New Relic license key:<br/>
@@ -208,7 +252,7 @@ and edit as required. You can refer to [New Relic Configuration documentation](h
 
 			Alternatively, you can add the license key to app's 'manifest.yml' file as an environment variable "NEW_RELIC_LICENSE_KEY" in the "env" section
 
-	
+
 		- **New Relic app name:** If you want the app name in New Relic be different than the app name in PCF, add the New Relic app name as you'd like it to appear in New Relic<br/>
 	    <pre>
 			  &lt;application&gt;
@@ -217,7 +261,7 @@ and edit as required. You can refer to [New Relic Configuration documentation](h
 	    </pre>
 
 			Alternatively you can add the New Relic app name to the app's 'manifest.yml' file as an environment variable "NEW_RELIC_APP_NAME" in the "env" section
-		
+
 
 	    - **Proxy Setting:** Add proxy settings to the "service" element as a sub-element. **Example:**
 	    <pre>
@@ -226,16 +270,16 @@ and edit as required. You can refer to [New Relic Configuration documentation](h
 	    	  &lt;/service&gt;
 	    </pre>
 
-		
+
 
 	    - **Logging Level:** Change agent logging level and destination<br/>
 	    <pre>
 	    	  &lt;log level="info" console="true" /&gt;
 	    </pre>
-		
-	    - **Non-IIS Executable Instrumentation:** Since for Dotnet Framework apps 'hwc.exe' is the executable 
-running your app, the copy of **"newrelic.config"** file that comes with the hwc extension 
-contains the proper settings to tell the executable name to the agent. 
+
+	    - **Non-IIS Executable Instrumentation:** Since for Dotnet Framework apps 'hwc.exe' is the executable
+running your app, the copy of **"newrelic.config"** file that comes with the hwc extension
+contains the proper settings to tell the executable name to the agent.
 If you provide your own **"newrelic.config"** file, make sure it contains the following tag:
 	    <pre>
 			  &lt;instrumentation&gt;
@@ -244,13 +288,13 @@ If you provide your own **"newrelic.config"** file, make sure it contains the fo
 			    &lt;/applications&gt;
 			  &lt;/instrumentation&gt;
 		</pre>
-	    
+
             <p class="note"><strong>Note:</strong> Depending on your CI/CD pipeline,
                the app directory may be created on-the-fly as part of the on-the-fly as part of the
                pipeline. If that is the case and you are modifying this file,
                your pipeline need to copy over the file to the app directory before pushing the app to PCF.</p>
 
-	
+
 	- Push your application to PCF using this buildpack.
           To do that, edit your manifest.yml and add/update the following entry.
 
@@ -287,7 +331,7 @@ This example does the following:
 
 + Uses the `dotnet` CLI to create a sample Dotnet Core app
 + Configures the app manifest to bind the app with New Relic Dotnet Core agent
-+ Pushes the app to PCF. 
++ Pushes the app to PCF.
 
 The example uses environment variables to specify the license key for the New Relic account.
 
@@ -320,11 +364,11 @@ applications:
 
 ### <a id='example-dotnet-framework'></a>Push a Sample Dotnet Framework App to PCF
 
-The following example shows the steps to configure the app manifest to bind a Dotnet Framework app to the 
+The following example shows the steps to configure the app manifest to bind a Dotnet Framework app to the
 New Relic Dotnet Framework agent using the New Relic HWC extension buildpack and the standard Cloud Foundry
 HWC buildpack and to push the app to PCF.
 
-The example uses environment variable to specify the license key for the New Relic account. 
+The example uses environment variable to specify the license key for the New Relic account.
 
 1. Create a sample Dotnet Framework app or pick one of your Dotnet Framework apps.
 
