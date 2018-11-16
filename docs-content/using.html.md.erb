@@ -16,7 +16,7 @@ to make it easy and convenient to bind apps to a New Relic service.
 The buildpack extensions bind to the New Relic Dotnet agent using one of the following ways depending on the environment:
 
 1. If an environment variable named `NEW_RELIC_DOWNLOAD_URL` is defined in the app environment
-(manifest file, cf set-env, or set in AppsMgr), its value is used as the location to download the agent.
+(manifest file, cf set-env, or set in Apps Manager), its value is used as the location to download the agent.
 This is used for environments where you have your own repository for downloading dependencies (i.e. Artifactory).
 If a second environment variable called `NEW_RELIC_DOWNLOAD_SHA256` is set in the app environment,
 it is expected to hold the downloaded agent's binary file SHA256 checksum.
@@ -52,57 +52,65 @@ depending on the value of the `version` property of the agent dependency (explic
 
 ## <a id='how-it-operates'></a> How the Extension Buildpack Binds Apps to the New Relic Agent
 
-The buildpack looks for several environment variables and files to determine how to bind the app to the agent.
+The buildpack looks for several environment variables and files to determine how
+to bind the app to the agent.
 
+The license key for a New Relic account must be specified in one of the following ways:<br>
 
-### <a id='license-key'></a> Bind the App to the New Relic Agent
+* `NEW_RELIC_LICENSE_KEY` env var
+* License key from user-provided service
+* License key from Service Broker Tile in Marketplace
+* License key from `newrelic.config` file
 
-The license key for a New Relic account must be specified in one of the following ways:<br/><br/>
-* NEW_RELIC_LICENSE_KEY env var<br/>
-* License key from User-Provided-Service<br/>
-* License key from Service Broker Tile in Marketplace<br/>
-* License key from newrelic.config<br/>
-
-<p class="note"><strong>Note:</strong> environment variables override all other options.</p>
+<p class="note"><strong>Note:</strong> Environment variables override all other options.</p>
 
 
 ### <a id='app-name'></a> App Name in the New Relic UI
 
 The app name for New Relic is determined in the following order:<br/><br/>
-* NEW_RELIC_APP_NAME env var<br/>
-* App name from User-Provided-Service<br/>
+* `NEW_RELIC_APP_NAME` env var<br/>
+* App name from user-provided service<br/>
 * App name from PCF<br/>
-* **Note** Currently the App name is not used in the newrelic.config file<br/>
+
+<p class="note"><strong>Note:</strong> Currently the App name is not used in the
+	<code>newrelic.config</code> file </p>
 
 
 ### <a id='agent-config'></a> New Relic Agent Configuration File
 
-The New Relic configuration file (**"newrelic.config"**) allows you to set a number of agent properties and change the behavior of the agent as you wish.
-Refer to [.NET agent configuration](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration)
-for more information on configuring the agent. You can make a copy of this file in the app's root directory, and change any of agent's settings.
-The buildpack looks for the agent's config file in the following order:<br/><br/>
+The New Relic configuration file `newrelic.config` allows you to set a number
+of agent properties and change the behavior of the agent as you wish.
+For more infotmation about configuring the agent,
+see [.NET agent configuration](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration).
+
+
+You can make a copy of this file in the app root directory, and change any of the agent settings.
+The buildpack looks for the agent config file in the following order:<br/><br/>
 * App root folder<br/>
 * Buildpack folder<br/>
 * Agent folder<br/>
 
 
-### <a id='ups'></a> New Relic User-Provided-Services
+### <a id='ups'></a> New Relic User-Provided Service
 
-If the app binds to a User-Provided-Service with the word **"newrelic"** as part of its name,
-the buildpack injects the credentials from this service in the app environment by setting environment
-variable for known New Relic properties. The known properties currently are:<br/><br/>
-* NEW_RELIC_LICNESE_KEY<br/>
-* NEW_RELIC_APP_NAME<br/>
-* NEW_RELIC_DISTRIBUTED_TRACING_ENABLED<br/>
+If the app binds to a user provided service with the word `newrelic` as part of its name,
+the buildpack injects the credentials from this service in the app environment
+by setting environment variable for known New Relic properties.
+The known properties currently are:<br/><br/>
+* `NEW_RELIC_LICNESE_KEY`<br/>
+* `NEW_RELIC_APP_NAME`<br/>
+* `NEW_RELIC_DISTRIBUTED_TRACING_ENABLED`<br/>
 
 
 ### <a id='proxy'></a> Use of Proxy
 
-If you're using a proxy server in your environment, you need to make a copy of the **"newrelic.config"**
-file of the agent in the app directory,
-and specify the [proxy information](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration#proxy)
-as a child of the **&lt;service&gt;** element.<br/>
-**Example:**<br/>
+If you're using a proxy server in your environment, you need to make a copy of
+the `newrelic.config`file of the agent in the app directory,
+and specify the proxy information as a child of the `service` element
+For more information about proxy settings, see
+[Proxy element](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration#proxy).
+<br/><br/>
+For example:
 <pre>
 	&lt;service licenseKey="0123456789abcdef0123456789abcdef01234567"&gt;
 	  &lt;proxy name="my.proxy.address" port="proxy.port" /&gt;
