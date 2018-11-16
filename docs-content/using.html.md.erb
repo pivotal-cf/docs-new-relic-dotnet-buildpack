@@ -15,22 +15,22 @@ to make it easy and convenient to bind apps to a New Relic service.
 
 The buildpack extensions bind to the New Relic Dotnet agent using one of the following ways depending on the environment:
 
-1. If an environment variable named **"NEW_RELIC_DOWNLOAD_URL"** is defined in the app environment
+1. If an environment variable named `NEW_RELIC_DOWNLOAD_URL` is defined in the app environment
 (manifest file, cf set-env, or set in AppsMgr), its value is used as the location to download the agent.
 This is used for environments where you have your own repository for downloading dependencies (i.e. Artifactory).
-If a second environment variable called **"NEW_RELIC_DOWNLOAD_SHA256"** is set in the app environment,
+If a second environment variable called `NEW_RELIC_DOWNLOAD_SHA256` is set in the app environment,
 it is expected to hold the downloaded agent's binary file SHA256 checksum.
 In this case the SHA256 checksum of the downloaded agent binary file is compared with this value, and in the case of a mismatch, the buildpack reports an error.
 
-1. You can create a cached version of the buildpack using the **"--cached"** switch with New Relic agent embedded in
+1. You can create a cached version of the buildpack using the `--cached` switch with New Relic agent embedded in
 the buildpack. This is mainly used in disconnected (isolated) environments where PCF does not have access to the
-outside world, and the buildpack cannot download the agent from New Relic's download site.
+outside world, and the buildpack cannot download the agent from New Relic download site.
 
 1. Use a specific version of New Relic agent by specifying the version in the buildpack manifest file at the time of packaging.
 
-1. Set the version of the agent to **"0.0.0.0"**, **"latest"**, or **"current"** in buildpack manifest file to download the latest version of the agent.
+1. Set the version of the agent to `0.0.0.0`, `latest`, or `current` in buildpack manifest file to download the latest version of the agent.
 
-Except in the first case when the download URL is specified, and the sha-256 code is not available
+Except in the first case when the download URL is specified, and the SHA256 code is not available
 the buildpack checks the SHA256 checksum of the downloaded (or copied) agent to validate the download.
 
 New Relic recommends you use the latest version of New Relic agents unless there is a reason
@@ -41,13 +41,13 @@ that keeps you from upgrading to newer releases of the agent.
 
 The order of precedence for which method to use to obtain the New Relic agent is from the top to bottom:
 
-1. If **"NEW_RELIC_DOWNLOAD_URL"** is specified, it precedes all other options.
+1. If `NEW_RELIC_DOWNLOAD_URL` is specified, it precedes all other options.
 
 1. If this environment variable is not specified, the cached buildpack takes precedence.
 
 1. Otherwise, the `version` property of the agent in the buildpack manifest is used,
 and one of the other two options is used to download the agent,
-depending on the value of the `version` property of the agent dependency (explicit version or "latest").
+depending on the value of the `version` property of the agent dependency (explicit version or `latest`).
 
 
 ## <a id='how-it-operates'></a> How the Extension Buildpack Binds Apps to the New Relic Agent
