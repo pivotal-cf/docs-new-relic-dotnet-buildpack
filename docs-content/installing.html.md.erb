@@ -3,7 +3,8 @@ title: Installing and Configuring New Relic Dotnet Extension Buildpack for PCF
 owner: Partners
 ---
 
-This topic describes how to install and configure New Relic Dotnet Extension Buildpack for Pivotal Cloud Foundry (PCF).
+This topic describes how to install and configure New Relic Dotnet Extension Buildpack for Pivotal 
+Cloud Foundry (PCF).
 
 You can either install the buildpacks as a tile in Ops Manager
 or push them individually as separate buildpacks using the cf CLI.
@@ -13,110 +14,177 @@ or push them individually as separate buildpacks using the cf CLI.
 
 To install and configure using Ops Manager, do the following:
 
-1. Download the latest version of the tile from [Pivotal Network (PivNet)](https://network.pivotal.io/products/newrelic-dotnet-buildpack), or from New Relic's github repo under [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/releases).
+1. Download the latest version of the tile from [Pivotal Network](https://network.pivotal.io/products/newrelic-dotnet-buildpack) or the New Relic 
+GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/releases).
 
-1. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file.
+1. To upload the product file, navigate to the **Installation Dashboard** in **Ops Manager** and click **Import a Product**.
 
-1. Under the **Import a Product** button, click the **"+"** sign next to the version number of **New Relic Dotnet Buildpack for PCF**. This adds the tile to your staging area.
+1. To add the tile to your staging tile, click **+**. 
 
-1. Click the newly added **New Relic Dotnet Extension Buildpack for PCF** tile.
+1. Click the **New Relic Dotnet Extension Buildpack for PCF** tile.
 
-1. Configure the tile according to your needs. You can accept the default values to install all 4 buildpacks in your PCF foundation, or in **Tile Configuration->New Relic Buildpack Selection** you can select the checkbox for each of the buildpacks that you want to install.
+1. If you want to configure your tile, do the following: 
+    1. Navigate to **Tile Configuration** > **New Relic Buildpack Selection** and select each of the buildpacks that you want to install.
+    
+    1. Click **Save** on each tab.
 
-1. If you make any configuration changes, click the **"Save"** button on each tab at the bottom of the page.
+1. If want to install all of the buildpacks, use the default values.
 
-1. In the **Installation UI** of Ops Manager, click on the blue button in top right to **Apply changes**.
+1. Navigate to **Installation Dashboard** and click **Review Pending Changes**.
 
-## <a id='install-buildpack'></a> Install New Relic Dotnet Extension Buildpack for PCF via the cf CLI
+1. Click **Apply Changes**.
+
+## <a id='install-config'></a> Install and Configure New Relic Dotnet Extension Buildpack for PCF via the cf CLI
+
+If you do not want to install the tile, you can download the PIVOTAL file, and install and configure 
+only the buildpacks you need using the cf CLI.
+
+### <a id='install'></a> Install via the cf CLI
 
 To install using the cf CLI, do the following:
 
-If you do not want to install the tile, you can alternatively unzip the downloaded **.pivotal** file, and install only the 
-buildpacks you need using the cf CLI command **"cf create-buildpack ..."**.
+1. Download the latest version of the tile from [Pivotal Network](https://network.pivotal.io/products/newrelic-dotnet-buildpack) or the New Relic 
+GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/releases).
 
-1. Unzip **"newrelic-dotnet-buildpack-*.pivotal"** into a separate subdirectory<br/>
-```
-unzip newrelic-dotnet-buildpack-*.pivotal -d buildpack_tile
-```
+1. To unzip the PIVOTAL file into a separate subdirectory, run the following command: 
 
-1. To change the directory into buildpack&#95;tile/releases, run the following:
+    ```
+    unzip newrelic-dotnet-buildpack-tile-VERSION-NUMBER.pivotal -d buildpack_tile
+    ```
+
+1. To change the directory to <code>buildpack&#95;tile/releases</code>, run the following command:
 
     ```
     cd buildpack_tile/releases
     ```
  
-1. Create a new subdirectory (i.e. tmp)<br/>
-```
-mkdir tmp
-```
+1. To create a new subdirectory, run the following command:
+    
+    ```
+    mkdir SUB-DIR
+    ```
+    
+    Where `SUB-DIR` is the name of the subdirectory you want to create. 
 
-1. Extract the **.tgz** file in the releases folder into the **tmp** directory<br/>
-```
-tar xvf newrelic-dotnet-buildpack-tile-*.tgz -C tmp
-```
+1. To extract the TGZ file in the releases folder into the `SUB-DIR` directory, run the following
+command: 
 
-1. Change directory into **tmp/packages**<br/>
-```
-cd tmp/packages
-```
+    ```
+    tar xvf newrelic-dotnet-buildpack-tile-VERSION-NUMBER.tgz -C `SUB-DIR`
+    ```
+    
+    Where `SUB-DIR` is the name of the subdirectory you created. 
+    
+1. To change the directory to `SUB-DIR/package`, run the following command:
+    
+    ```
+    cd SUB-DIR/packages
+    ```
 
-1. Extract any of the individual buildpack **.tgz** files using the following command<br/>
-```
-tar xvf <BUILDPACK_NAME>.tgz
-```
+    Where `SUB-DIR` is the name of the subdirectory you created. 
+    
+1. To extract any of the individual buildpack TGZ files, run the following command:
+    
+    ```
+    tar xvf BUILDPACK-NAME.tgz
+    ```
+    
+    Where `BUILDPACK-NAME` is the name of the buildpack you want to extract.
+
+1. To upload the zipped buildpack, run the following command:
+
+    ```
+    cf create-buildpack BUILDPACK-NAME BUILDPACK-ZIP-FILE-PATH 99
+    ```
+
+    Where:
+    + `BUILDPACK-NAME` is the name of the buildpack you want to upload.
+    + `BUILDPACK-ZIP-FILE-PATH` is the path for the zipped buildpack.
+
+
+### <a id='configure'></a> Configure via the cf CLI
+The buildpacks in the downloaded tile are already built and ready to be used in Cloud Foundry. 
+To make changes to the buildpack or update the cached version of the buildpacks 
+with a newer version of dependencies, you can build a custom copy with the cf CLI and deploy it on 
+Cloud Foundry.
+
+#### <a id='build-deploy'></a> Build the Custom Buildpack 
+
+To build a custom copy of the buildpacks, do the following:
+
+1. To clone the buildpack repo into your local environment, do the following:
+   1. If you want to clone the New Relic Dotnet Core Extension Buildpack, run the following command:
+   
+          ```
+          git clone https://github.com/newrelic/newrelic-dotnetcore-extension-buildpack
+          ```
+    
+  1. If you want to clone New Relic HWC Extension Buildpack, run the following command:
+   
+        ```
+        git clone https://github.com/newrelic/newrelic-hwc-extension-buildpack
+        ```
+
+1. To change the directory to the cloned buildpack, do the following:
+    1. If you cloned the New Relic Dotnet Core Extension Buildpack, run the following command:
+    
+        ```
+        cd newrelic-dotnetcore-extension-buildpack
+        ```
+    
+    1. If you cloned the New Relic HWC Extension Buildpack, run the following command:
+        
+        ```
+        cd newrelic-hwc-extension-buildpack
+        ```
+
+1. To source the ENVRC file, run the following command:
+
+    ```
+    source .envrc
+    ```
+
+1. To install `buildpack-packager`, run the following command:
+
+    ```
+    ./scripts/install_tools.sh
+    ```
+
+1. To build the buildpack, run the following command: 
+
+    ```
+    buildpack-packager build [ --cached ] -any-stack
+    ```
+
 <br/>
-this will create a folder by the name of the buildpack, and the newly created folder contains the zipped version of the buildpack. 
+#### <a id='deploy'></a> Deploy the Buildpack
 
-1. Upload the zipped buildpack file using cf CLI's **"cf create-buildpack"** command
-```
-cf create-buildpack <BUILDPACK_NAME> <ZIPPED_BUILDPACK_NAME.zip> 99
-```
+To deploy the custom buildpack, do the following:
+ 
+1. To upload your buildpack, run the following command:
 
-## <a id='buildpack-build-deploy'></a> Buildpack Build and Deploy Process
+    ```
+    cf create-buildpack BUILDPACK-NAME BUILDPACK-ZIP-FILE-PATH 99
+    ```
+    
+    Where:
+    + `BUILDPACK-NAME` is the name of the buildpack you want to upload.
+    + `BUILDPACK-ZIP-FILE-PATH` is the path for the zipped buildpack.
 
+1. To deploy your buildpack, run the following command:
 
-### <a id='build'></a> Build
-The buildpacks in this tile are already built and ready to be used in Cloud Foundry. 
-However, to make changes to the buildpack or update the cached version of the buildpacks 
-with a newer version of dependencies, you can build your own copy. 
-Follow the instructions below to build your own copy of the buildpacks.
-
-1. Clone the buildpack repo to your system<br/>
-``` 
-git clone https://github.com/newrelic/newrelic-dotnetcore-extension-buildpack
-or https://github.com/newrelic/newrelic-hwc-extension-buildpack
-```
-
-1. Change directory into the cloned buildpack
-
-1. Source the **.envrc** file in the buildpack directory.
-```
-source .envrc
-```
-
-1. Install **buildpack-packager**
-```
-./scripts/install_tools.sh
-```
-
-1. Build the buildpack
-```bash
-buildpack-packager build [ --cached ] -any-stack
-```
-
-
-<br/>
-### <a id='deploy'></a> Deploy
-
-To deploy and use the buildpack in Cloud Foundry.
-Upload the buildpack to your Cloud Foundry and optionally specify it by name using the cf CLI:
-
-```
-cf create-buildpack [NEWRELIC_DOTNET_CORE_EXTENSION_BUILDPACK] [BUILDPACK_ZIP_FILE_PATH] 99
-cf push my_app -b NEWRELIC_DOTNET_CORE_EXTENSION_BUILDPACK   -b DOTNET_CORE_BUILDPACK
-```
-**Note:** to create the HWC extension change the names from **CORE** to **HWC**.
-
-
-
-<br/>
+    ```
+    cf push YOUR-APP -b BUILDPACK-NAME
+    ```
+    
+    Where:
+     + `YOUR-APP` is the name of your app.
+     + `BUILDPACK-NAME` is the name of the buildpack you want to upload. <br> <br>
+    
+    If you are deploying multiple buildpacks, specficy each buildpack with a `-b` flag. <br><br> 
+    
+    For example:
+    
+    ```
+    cf push YOUR-APP -b BUILDPACK-NAME-1 -b BUILDPACK-NAME-2
+    ```  
