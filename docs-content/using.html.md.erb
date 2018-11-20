@@ -59,7 +59,7 @@ The license key for a New Relic account must be specified in one of the followin
 
 * `NEW_RELIC_LICENSE_KEY` env var
 * License key from user-provided service
-* License key from Service Broker Tile in Marketplace
+* License key from Service Broker tile in the Marketplace
 * License key from `newrelic.config` file
 
 <p class="note"><strong>Note:</strong> Environment variables override all other options.</p>
@@ -67,28 +67,30 @@ The license key for a New Relic account must be specified in one of the followin
 
 ### <a id='app-name'></a> App Name in the New Relic UI
 
-The app name for New Relic is determined in the following order:<br/><br/>
-* `NEW_RELIC_APP_NAME` env var<br/>
-* App name from user-provided service<br/>
-* App name from PCF<br/>
+The app name for New Relic is determined in the following order:
 
-<p class="note"><strong>Note:</strong> Currently the App name is not used in the
-	<code>newrelic.config</code> file </p>
+* `NEW_RELIC_APP_NAME` env var
+* App name from user-provided service
+* App name from PCF
+
+<p class="note"><strong>Note:</strong> Currently the app name is not used in the
+	<code>newrelic.config</code> file.</p>
 
 
 ### <a id='agent-config'></a> New Relic Agent Configuration File
 
 The New Relic configuration file `newrelic.config` allows you to set a number
-of agent properties and change the behavior of the agent as you wish.
+of agent properties and change the behavior of the agent as you want.
 For more infotmation about configuring the agent,
 see [.NET agent configuration](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration).
 
 
 You can make a copy of this file in the app root directory, and change any of the agent settings.
-The buildpack looks for the agent config file in the following order:<br/><br/>
-* App root folder<br/>
-* Buildpack folder<br/>
-* Agent folder<br/>
+The buildpack looks for the agent config file in the following order:
+
+* App root folder
+* Buildpack folder
+* Agent folder
 
 
 ### <a id='ups'></a> New Relic User-Provided Service
@@ -96,15 +98,18 @@ The buildpack looks for the agent config file in the following order:<br/><br/>
 If the app binds to a user provided service with the word `newrelic` as part of its name,
 the buildpack injects the credentials from this service in the app environment
 by setting environment variable for known New Relic properties.
-The known properties currently are:<br/><br/>
-* `NEW_RELIC_LICNESE_KEY`<br/>
-* `NEW_RELIC_APP_NAME`<br/>
-* `NEW_RELIC_DISTRIBUTED_TRACING_ENABLED`<br/>
+The known properties currently are:
+
+* `NEW_RELIC_LICNESE_KEY`
+
+* `NEW_RELIC_APP_NAME`
+
+* `NEW_RELIC_DISTRIBUTED_TRACING_ENABLED`
 
 
 ### <a id='proxy'></a> Use of Proxy
 
-If you're using a proxy server in your environment, you need to make a copy of
+If you are using a proxy server in your environment, you need to make a copy of
 the `newrelic.config`file of the agent in the app directory,
 and specify the proxy information as a child of the `service` element
 For more information about proxy settings, see
@@ -147,10 +152,11 @@ variable to the location of the agent download.
 
 
 #### <a id='using-tile'></a>Use New Relic Service Broker for PCF
-To bind your app to New Relic Dotnet (Core or Framework) agent from the New Relic Service Broker for PCF, do one of the following:
+To bind your app to New Relic Dotnet (Core or Framework) agent from the New Relic Service
+Broker for PCF, do one of the following:
 
 * From Pivotal Services Marketplace:
-	1. Click on **New Relic Service Broker** tile
+	1. Click **New Relic Service Broker** tile.
 	1. Select the plan that is associated with your New Relic account
 	(check with PCF admin).
 	1. Specify the instance name.
@@ -174,17 +180,17 @@ To bind your app to New Relic Dotnet (Core or Framework) agent from the New Reli
 
 * From Apps Manager:
 	1. Push your app to PCF.
-	1. In **Apps Manager**, click on your app.
+	1. In **Apps Manager**, click your app.
 	1. Navigate to **Service**.
-	1. bind your app to New Relic Service
+	1. Bind your app to New Relic Service.
 	    1. If you have already created a service instance, do the following:
 		    1. Select **Bind Service**.
 		    1. Select the service instance you want.
-		    1. Click **Bind**
+		    1. Click **Bind**.
 	    1. If a service instance does not already exist, create a Service Instance by
 	    doing the following:
 		    1. Select **New Service**.
-		    1. Click on the **New Relic Service Broker** tile.
+		    1. Click the **New Relic Service Broker** tile.
 		    1. Select the plan that is associated with your New Relic account.
 		    1. Click **Select Plan**.
 		    1. Specify the instance name.
@@ -208,7 +214,7 @@ To bind your app to New Relic Dotnet (Core or Framework) agent from the New Reli
 
     Where `MY-NEWRELIC-SVC` is the name of your user-provided service. <br><br>
 
-    You will be prompted to enter values for licenseKey and appName.<br><br>
+    You are prompted to enter values for licenseKey and appName.<br><br>
 	+ `licenseKey`. This is the New Relic license key.
 	+ (Optional) `appName`. If you want to change the app name in New Relic
 	use this property.
@@ -231,7 +237,7 @@ To bind your app to New Relic Dotnet (Core or Framework) agent from the New Reli
 	+ `NEWRELIC-PLAN-NAME` is the name of your New Relic service plan.
 	+ `NEWRELIC-SERVICE-INSTANCE-NAME` is the name of your New Relic service instance.
 1. Specify the service instance name in the `services` section of the app
-`manifest.yml` file. Indent the section by two space.<br><br>
+`manifest.yml` file. Indent the section by two spaces.<br><br>
  For example:
 
 	```
@@ -266,7 +272,7 @@ The following are some examples you can use:
 	```
 
 	You can also add the license key to the app `manifest.yml` file as
-	an environment variable `NEW_RELIC_LICENSE_KEY` in the `env` section
+	an environment variable `NEW_RELIC_LICENSE_KEY` in the `env` section.
 
 
 - Add New Relic app name:
@@ -300,8 +306,9 @@ You can change the agent logging level and destination.
 	  <log level="info" console="true" />
 ```
 
-## <a id='non-iis'></a> Non-IIS Executable Instrumentation:<br>
-Since for Dotnet Framework apps `hwc.exe` is the executable
+## <a id='non-iis'></a> Non-IIS Executable Instrumentation:
+
+Because Dotnet Framework apps `hwc.exe` is the executable
 running your app, the copy of `newrelic.config` file that comes with the hwc extension
 contains the proper settings to tell the executable name to the agent.
 
@@ -331,7 +338,8 @@ following tag: <br>
 	- hwc_buildpack
 	```
 
-	Where `NEWRELIC_EXTENSION_BUILDPACK_NAME` is the name of New Relic dotnet core or dotnet framework extension
+	Where `NEWRELIC_EXTENSION_BUILDPACK_NAME` is the name of New Relic Dotnet Core
+        or Dotnet Framework extension.
 
 1. Run `cf push`.
 
@@ -341,12 +349,12 @@ following tag: <br>
 
 ## <a id='envvar-and-nrconfig'></a>Debugging
 
-* Set the `BP_DEBUG` environment variable
+* Set the `BP_DEBUG` environment variable.
 	- For troubleshooting purposes, you can set `BP_DEBUG` environment variable to `true`
 	in your app environment to get more logging during the app staging.
 
 
-* Check the logs
+* Check the logs.
 	- Run `cf logs APP-NAME` or `cf logs APP-NAME --recent`   to examine the app logs.
 	It should display the New Relic agent installation progress.
 
@@ -373,14 +381,14 @@ The example uses environment variables to specify the license key for the New Re
     dotnet new mvc -n myapp
     ```
 
-1. Test the app locally<br/>
+1. Test the app locally.<br/>
 
 	```
 	cd myapp
 	dotnet run
 	```
 
-1. Create a manifest.yml file for the app<br/>
+1. Create a manifest.yml file for the app.<br/>
   <pre>---
 applications:
 \- name: myapp
