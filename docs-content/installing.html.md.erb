@@ -157,7 +157,7 @@ To build a custom copy of the buildpacks, do the following:
     ```
 
 <br/>
-#### <a id='deploy'></a> Deploy the Buildpack
+#### <a id='deploy'></a> Deploy Your Application Using the Buildpack
 
 To deploy the custom buildpack, do the following:
  
@@ -171,20 +171,16 @@ To deploy the custom buildpack, do the following:
     + `BUILDPACK-NAME` is the name of the buildpack you want to upload.
     + `BUILDPACK-ZIP-FILE-PATH` is the path for the zipped buildpack.
 
-1. To deploy your buildpack, run the following command:
+1. To deploy your application using New Relic extension buildpacks, run the following command:
 
     ```
-    cf push YOUR-APP -b BUILDPACK-NAME
+    cf push YOUR-APP -b BUILDPACK-NAME-1  -b BUILDPACK-NAME-2
     ```
     
     Where:
-     + `YOUR-APP` is the name of your app.
-     + `BUILDPACK-NAME` is the name of the buildpack you want to upload. <br> <br>
+     + `YOUR-APP` is the name of your application.
+     + `BUILDPACK-NAME-1` is one of New Relic's extension buildpacks for Dotnet Core or Dotnet Framework (HWC)
+     + `BUILDPACK-NAME-2` is the name of the standard buildpack (either Dotnet Core or HWC buildpack). <br> <br>
     
-    If you are deploying multiple buildpacks, specficy each buildpack with a `-b` flag. <br><br> 
-    
-    For example:
-    
-    ```
-    cf push YOUR-APP -b BUILDPACK-NAME-1 -b BUILDPACK-NAME-2
-    ```  
+    <p class="note"><strong>Note:</strong> Since these are extension buildpacks you must specify the main Cloud Foundry buildpack at the end of the chain.</p>
+     

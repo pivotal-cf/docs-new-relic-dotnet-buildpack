@@ -125,7 +125,7 @@ account license key in one of the following ways:
 
 + [Use a License Key Environment Variable](#using-key-env)
 + [Use a local copy of the New Relic Dotnet Agent](#using-local-copy)
-+ [Use the New Relic Dotnet tile](#using-tile)
++ [Use New Relic Service Broker for PCF](#using-tile)
 + [Use a User-Provided Service](#using-user)
 + [Use the cf CLI](#using-cli)
 
@@ -146,11 +146,11 @@ In the app manifest file you can then set the `NEW_RELIC_DOWNLOAD_URL` environme
 variable to the location of the agent download.
 
 
-#### <a id='using-tile'></a>Use the New Relic Dotnet Tile
-To bind your app with the New Relic Dotnet tile, do one of the following:
+#### <a id='using-tile'></a>Use New Relic Service Broker for PCF
+To bind your app to New Relic Dotnet (Core or Framework) agent from the New Relic Service Broker for PCF, do one of the following:
 
 * From Pivotal Services Marketplace:
-	1. Click on **New Relic Dotnet Extension Buildpack for PCF** tile
+	1. Click on **New Relic Service Broker** tile
 	1. Select the plan that is associated with your New Relic account
 	(check with PCF admin).
 	1. Specify the instance name.
@@ -176,18 +176,19 @@ To bind your app with the New Relic Dotnet tile, do one of the following:
 	1. Push your app to PCF.
 	1. In **Apps Manager**, click on your app.
 	1. Navigate to **Service**.
-	1. If you have already created a service instance, do the following:
-		1. Select **Bind Service**.
-		1. Select the service instance you want.
-		1. Click **Bind**
-	1. If this your first time create a service instance and one does not exist,
-	do the following:
-		1. Select **New Service**.
-		1. Click on the **New Relic Dotnet Extension Buildpack for PCF service** tile.
-		1. Select the plan that is associated with your New Relic account.
-		1. Click **Select Plan**.
-		1. Specify the instance name.
-		1. Click **Create**
+	1. bind your app to New Relic Service
+	    1. If you have already created a service instance, do the following:
+		    1. Select **Bind Service**.
+		    1. Select the service instance you want.
+		    1. Click **Bind**
+	    1. If a service instance does not already exist, create a Service Instance by
+	    doing the following:
+		    1. Select **New Service**.
+		    1. Click on the **New Relic Service Broker** tile.
+		    1. Select the plan that is associated with your New Relic account.
+		    1. Click **Select Plan**.
+		    1. Specify the instance name.
+		    1. Click **Create**
 	1. To restage the app, run the following command:
 
 		```
@@ -199,19 +200,20 @@ To bind your app with the New Relic Dotnet tile, do one of the following:
 
 #### <a id='using-user'></a>Use a User-Provided Service
 1. Create a user-provided service with `newrelic` as part of the service name.
-1. Add the following credentials to the user-provided service:
-	+ `licenseKey`. This is the New Relic license key.
-	+ (Optional) `appName`. If you want to change the app name in New Relic
-	use this property
 1. Run the following command:
 
-	```
-	cf cups MY-NEWRELIC-SVCc -p licenseKey,appName
-	```
+    ```
+    cf cups MY-NEWRELIC-SVCc -p "licenseKey,appName"
+    ```
 
-	Where `MY-NEWRELIC-SVC` is the name of your user-provided service. <br><br>
+    Where `MY-NEWRELIC-SVC` is the name of your user-provided service. <br><br>
 
-	You will be prompted to enter values for licenseKey and appName.<br><br>
+    You will be prompted to enter values for licenseKey and appName.<br><br>
+	+ `licenseKey`. This is the New Relic license key.
+	+ (Optional) `appName`. If you want to change the app name in New Relic
+	use this property.
+
+
 1. To push your app, do one of the following:
 	+ Before pushing your app, add the user-provided service to the app
 	`manifest.yml`.
@@ -329,7 +331,7 @@ following tag: <br>
 	- hwc_buildpack
 	```
 
-	Where `NEWRELIC_EXTENSION_BUILDPACK_NAME` is the name of the New Relic buildpack name.
+	Where `NEWRELIC_EXTENSION_BUILDPACK_NAME` is the name of New Relic dotnet core or dotnet framework extension
 
 1. Run `cf push`.
 
@@ -337,11 +339,11 @@ following tag: <br>
 	tool, <code>cf push</code> may not be required as your pipeline internally
 	uses <code>cf push</code> to push the app to PCF. </p>
 
-### <a id='envvar-and-nrconfig'></a>Debugging
+## <a id='envvar-and-nrconfig'></a>Debugging
 
 * Set the `BP_DEBUG` environment variable
-	- For troubleshooting purposes, you can set `BP_DEBUG` environment variable
-	in your app environment to get more logging during the app push.
+	- For troubleshooting purposes, you can set `BP_DEBUG` environment variable to `true`
+	in your app environment to get more logging during the app staging.
 
 
 * Check the logs
@@ -372,10 +374,11 @@ The example uses environment variables to specify the license key for the New Re
     ```
 
 1. Test the app locally<br/>
-```
-cd myapp
-dotnet run
-```
+
+	```
+	cd myapp
+	dotnet run
+	```
 
 1. Create a manifest.yml file for the app<br/>
   <pre>---
