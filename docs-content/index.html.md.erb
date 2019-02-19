@@ -1,22 +1,9 @@
 ---
-title: New Relic Dotnet Extension Buildpack for PCF (Beta)
+title: New Relic Dotnet Extension Buildpack for PCF
 owner: Partners
 ---
 
-<p class="note warning"><strong> WARNING:</strong>
-This tile requires a Trusty stemcell.
-The end-of-life date for Ubuntu Trusty is April 2019.
-If a security vulnerability is found on this stemcell after April, it will not be fixed.</p>
-
 <strong><%= modified_date %></strong>
-
-<p class="note warning">
-<strong>WARNING! </strong>
-The initial version of the New Relic Dotnet Extension Buildpack for Pivotal Cloud Foundry (PCF) 
-was in private beta internally. 
-It was used by New Relic and a select number of customers before being released to Pivotal Network. 
-The product is currently in public beta and is intended for evaluation and testing purposes until further notice.
-</p>
 
 This documentation describes the New Relic Dotnet Extension Buildpack for PCF and provides 
 instructions on how to install the tile. The tile can bind New Relic agents to Dotnet
@@ -35,7 +22,7 @@ New Relic Dotnet agents. This allows you to monitor the health and performance o
 analyze the data captured by agents, and additionally correlate the captured agent data with PCF infrastructure metrics and events collected by the [New Relic Firehose Nozzle](https://network.pivotal.io/products/nr-firehose-nozzle/).
 
 The New Relic Dotnet Extension Buildpack for PCF can be installed via the tile in Ops Manager. 
-Alternatively, you can extract the PIVOTAL file and install individual extension buildpacks using the 
+Alternatively, you can extract the <code>.Pivotal</code> file and install individual extension buildpacks using the 
 cf Command Line Interface (CLI) command <code>cf create-buildpack</code>.
 
 After you start monitoring your apps, you can set alerts based on any metrics
@@ -51,14 +38,17 @@ following buildpacks depending on the tile configuration:
    Applications (Ubuntu Trusty 14.04 and Xenial 16.04 stemcells) running in disconnected (isolated) PCF deployments
 
 + New Relic HWC Extension Buildpack for Dotnet Framework Applications (Windows 2012 R2 and Windows 2016 stemcells) 
-  This extension buildpack is non-cached.
+  This extension buildpack is non-cached. This is for support of Airgapped environments where there is no access to the outside world.
 
 + New Relic HWC Extension Cached Buildpack for Dotnet Framework Applications
-   (Windows 2012 R2 and Windows 2016 stemcells) running in disconnected (isolated) PCF deployments
+   (Windows 2012 R2 and Windows 2016 stemcells) running in disconnected (isolated) PCF deployments. This is for support of Airgapped environments where there is no access to the outside world.
 
 All buildpacks use the multi-buildpack approach of Cloud Foundry and require either the standard 
 Dotnet Core buildpack or HWC buildpack to be specified in the buildpack chain, either in the app 
-manifest or in the cf CLI.
+manifest or in the <code>cf push</code> command line.
+
+<p class="note"><strong>Note:</strong> The cached version of this extension buildpack for both Dotnet Core and Dotnet Framework contains New Relic Dotnet Agents version <code>8.13.798.0</code></p>
+
 
 ## <a id="snapshot"></a> Product Snapshot
 
@@ -69,27 +59,23 @@ The following table provides version and version-support information about New R
     <th>Details</th>
     <tr>
         <td>Tile version</td>
-        <td>1.0.1</td>
+        <td>1.1.0</td>
     </tr>
     <tr>
         <td>Release date</td>
-        <td>November 21, 2018</td>
+        <td>February 19, 2019</td>
     </tr>
     <tr>
         <td>Software component version</td>
-        <td>New Relic Dotnet Extension Buildpack v1.0.1</td>
+        <td>New Relic Dotnet Extension Buildpack v1.1.0</td>
     </tr>
     <tr>
         <td>Compatible Ops Manager version(s)</td>
-        <td>v2.1.x, v2.2.x, and v2.3.x</td>
+        <td>v2.1.x, v2.2.x, v2.3.x, and v2.4.x</td>
     </tr>
     <tr>
         <td>Compatible Pivotal Application Service versions</td>
-        <td>v2.1.x, v2.2.x, and v2.3.x</td>
-    </tr>
-    <tr>
-       <td>BOSH stemcell version</td>
-       <td>Ubuntu Trusty</td>
+        <td>v2.1.x, v2.2.x, v2.3.x, and v2.4.x</td>
     </tr>
     <tr>
         <td>IaaS support</td>
@@ -114,14 +100,14 @@ New Relic Dotnet Extension Buildpack for PCF requires the following:
   see [buildpacks](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html#buildpack)
   in the Cloud Foundry documentation.
 
-* To use the Dotnet HWC extension, you need the buildpack 3.0.3 or later.
+* To use the Dotnet HWC extension, you need HWC buildpack 3.0.3 or later.
 
 * To use the Dotnet Core extension, you need the dotnet core buildpack 2.1.5 or later.
 
 
 ## <a id='trial'></a> Trial License
 
-If you do not already have a New Relic account, you can obtain an account with a [60-day free trial license](http://newrelic.com/signup?funnel=pivotal-cloud-foundry&partner=Pivotal+Cloud+Foundry&product_id=Standard&promo_code=PVCF60PRO).
+If you do not already have a New Relic account, you can obtain an account with a [free trial license](http://newrelic.com/signup?funnel=pivotal-cloud-foundry&partner=Pivotal+Cloud+Foundry).
 
 
 ## <a id="feedback"></a> Feedback
