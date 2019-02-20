@@ -63,6 +63,7 @@ The license key for a New Relic account must be specified in one of the followin
 * License key from `newrelic.config` file
 
 <p class="note"><strong>Note:</strong> Environment variables override all other options.</p>
+<p class="note"><strong>Note:</strong> To obtain your New Relic account's license key login to New Relic, and from the top right pull-down menu select <code>Account settings</code> option. Copy the license key from the right side of the screen.</p>
 
 
 ### <a id='app-name'></a> App Name in the New Relic UI
@@ -70,8 +71,8 @@ The license key for a New Relic account must be specified in one of the followin
 The app name for New Relic is determined in the following order:
 
 * `NEW_RELIC_APP_NAME` env var
-* App name from user-provided service
-* App name from PCF
+* App name from <code>user-provided</code> service
+* App name from PCF (as defined in application manifest)
 
 <p class="note"><strong>Note:</strong> Currently the app name is not used in the
 	<code>newrelic.config</code> file.</p>
@@ -118,7 +119,7 @@ For more information about proxy settings, see
 For example:
 <pre>
 	&lt;service licenseKey="0123456789abcdef0123456789abcdef01234567"&gt;
-	  &lt;proxy name="my.proxy.address" port="proxy.port" /&gt;
+	  &lt;proxy host="my.proxy.address" port="proxy.port" /&gt;
 	&lt;/service&gt;
 </pre>
 

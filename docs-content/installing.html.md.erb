@@ -7,7 +7,7 @@ This topic describes how to install and configure New Relic Dotnet Extension Bui
 Cloud Foundry (PCF).
 
 You can either install the buildpacks as a tile in Ops Manager
-or push them individually as separate buildpacks using the cf CLI.
+or create them individually as separate buildpacks using <code>cf create-buildpack</code> command.
 
 
 ## <a id='install-opsmgr'></a> Install and Configure New Relic Dotnet Extension Buildpack for PCF in Ops Manager
@@ -19,16 +19,14 @@ GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/rel
 
 1. To upload the product file, navigate to the **Installation Dashboard** in **Ops Manager** and click **Import a Product**.
 
-1. To add the tile to your staging tile, click **+**. 
+1. To add the tile to your staging tile, click **"+"** sign. 
 
 1. Click the **New Relic Dotnet Extension Buildpack for PCF** tile.
 
-1. If you want to configure your tile, do the following: 
-    1. Navigate to **Tile Configuration** > **New Relic Buildpack Selection** and select each of the buildpacks that you want to install.
+1. By default all 4 buildpacks are created. If you want to install the buildpacks selectively, do the following: 
+    1. Navigate to **Tile Configuration** > **New Relic Buildpack Selection** and select only the buildpacks that you wish to install.
     
     1. Click **Save** on each tab.
-
-1. If want to install all of the buildpacks, use the default values.
 
 1. Navigate to **Installation Dashboard** and click **Review Pending Changes**.
 
@@ -98,7 +96,7 @@ command:
     ```
 
     Where:
-    + `BUILDPACK-NAME` is the name of the buildpack you want to upload.
+    + `BUILDPACK-NAME` is a decriptive name for the buildpack which you are about to upload.
     + `BUILDPACK-ZIP-FILE-PATH` is the path for the zipped buildpack.
 
 
