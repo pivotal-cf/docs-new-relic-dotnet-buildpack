@@ -38,10 +38,12 @@ following buildpacks depending on the tile configuration:
    Applications (Ubuntu Trusty 14.04 and Xenial 16.04 stemcells) running in disconnected (isolated) PCF deployments
 
 + New Relic HWC Extension Buildpack for Dotnet Framework Applications (Windows 2012 R2 and Windows 2016 stemcells) 
-  This extension buildpack is non-cached. This is for support of Airgapped environments where there is no access to the outside world.
+  This extension buildpack is non-cached.
+  This is for support of air-gapped environments where there is no access to the outside world.
 
 + New Relic HWC Extension Cached Buildpack for Dotnet Framework Applications
-   (Windows 2012 R2 and Windows 2016 stemcells) running in disconnected (isolated) PCF deployments. This is in support of Airgapped environments where there is no access to the outside world.
+   (Windows 2012 R2 and Windows 2016 stemcells) running in disconnected (isolated) PCF deployments.
+   This is in support of air-gapped environments where there is no access to the outside world.
 
 All buildpacks use the multi-buildpack approach of Cloud Foundry and require either the standard 
 Dotnet Core buildpack or HWC buildpack to be specified in the buildpack chain, either in the app 
