@@ -1,48 +1,48 @@
 ---
-title: New Relic Dotnet Extension Buildpack for PCF
+title: New Relic Dotnet Extension Buildpack for Pivotal Platform
 owner: Partners
 ---
 
 <strong><%= modified_date %></strong>
 
-This documentation describes the New Relic Dotnet Extension Buildpack for PCF and provides 
+This documentation describes the New Relic Dotnet Extension Buildpack for Pivotal Platform and provides 
 instructions on how to install the tile. The tile can bind New Relic agents to Dotnet
- Core or Dotnet Framework apps so you can monitor them in a PCF environment.
+ Core or Dotnet Framework apps so you can monitor them in a Pivotal Platform environment.
 
 <br/>
 <center>
-    <img src="images/nr-black-256x256.png" alt="New Relic Dotnet Extension Buildpack for PCF Logo" height="150" width="150"/>
+    <img src="images/nr-black-256x256.png" alt="New Relic Dotnet Extension Buildpack for Pivotal Platform Logo" height="150" width="150"/>
 </center>
 
 
 ## <a id='overview'></a> Overview
 
-The New Relic Dotnet Extension Buildpack for PCF enables you to bind your Dotnet (Core and Framework) apps to 
+The New Relic Dotnet Extension Buildpack for Pivotal Platform enables you to bind your Dotnet (Core and Framework) apps to 
 New Relic Dotnet agents. This allows you to monitor the health and performance of these apps, 
-analyze the data captured by agents, and additionally correlate the captured agent data with PCF infrastructure metrics and events collected by the [New Relic Firehose Nozzle](https://network.pivotal.io/products/nr-firehose-nozzle/).
+analyze the data captured by agents, and additionally correlate the captured agent data with Pivotal Platform infrastructure metrics and events collected by the [New Relic Firehose Nozzle](https://network.pivotal.io/products/nr-firehose-nozzle/).
 
-The New Relic Dotnet Extension Buildpack for PCF can be installed via the tile in Ops Manager. 
+The New Relic Dotnet Extension Buildpack for Pivotal Platform can be installed via the tile in Ops Manager. 
 Alternatively, you can extract the <code>.Pivotal</code> file and install individual extension buildpacks using the 
 cf Command Line Interface (CLI) command <code>cf create-buildpack</code>.
 
 After you start monitoring your apps, you can set alerts based on any metrics
 that are collected by Dotnet agents using the New Relic alerting subsystem.
 
-The New Relic Dotnet Extension Buildpack for PCF installs one or more of the
+The New Relic Dotnet Extension Buildpack for Pivotal Platform installs one or more of the
 following buildpacks depending on the tile configuration:
 
 + New Relic Dotnet Core Extension Buildpack for Dotnet Core Applications (Ubuntu Trusty 14.04 and Xenial 16.04 stemcells).
   This extension buildpack is non-cached.
 
 + New Relic Dotnet Core Extension Cached Buildpack for Dotnet Core
-   Applications (Ubuntu Trusty 14.04 and Xenial 16.04 stemcells) running in disconnected (isolated) PCF deployments
+   Applications (Ubuntu Trusty 14.04 and Xenial 16.04 stemcells) running in disconnected (isolated) Pivotal Platform deployments
 
 + New Relic HWC Extension Buildpack for Dotnet Framework Applications (Windows 2012 R2 and Windows 2016 stemcells) 
   This extension buildpack is non-cached.
   This is for support of air-gapped environments where there is no access to the outside world.
 
 + New Relic HWC Extension Cached Buildpack for Dotnet Framework Applications
-   (Windows 2012 R2 and Windows 2016 stemcells) running in disconnected (isolated) PCF deployments.
+   (Windows 2012 R2 and Windows 2016 stemcells) running in disconnected (isolated) Pivotal Platform deployments.
    This is in support of air-gapped environments where there is no access to the outside world.
 
 All buildpacks use the multi-buildpack approach of Cloud Foundry and require either the standard 
@@ -54,7 +54,7 @@ manifest or in the <code>cf push</code> command line.
 
 ## <a id="snapshot"></a> Product Snapshot
 
-The following table provides version and version-support information about New Relic Dotnet Extension Buildpack for PCF.
+The following table provides version and version-support information about New Relic Dotnet Extension Buildpack for Pivotal Platform.
 
 <table class="nice">
     <th>Element</th>
@@ -91,12 +91,12 @@ The following table provides version and version-support information about New R
 
 ## <a id='compatibility'></a> Compatibility
 
-This product has been tested and is compatible with PCF versions up to and including v2.6.
+This product has been tested and is compatible with Pivotal Platform versions up to and including v2.6.
 
 
 ## <a id="reqs"></a> Requirements
 
-New Relic Dotnet Extension Buildpack for PCF requires the following:
+New Relic Dotnet Extension Buildpack for Pivotal Platform requires the following:
 
 * An active New Relic account with a license key. This is used to bind Dotnet apps to New Relic Dotnet agents.
 

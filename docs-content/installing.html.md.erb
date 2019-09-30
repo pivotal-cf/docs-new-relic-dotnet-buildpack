@@ -1,16 +1,16 @@
 ---
-title: Installing and Configuring New Relic Dotnet Extension Buildpack for PCF
+title: Installing and Configuring New Relic Dotnet Extension Buildpack for Pivotal Platform
 owner: Partners
 ---
 
 This topic describes how to install and configure New Relic Dotnet Extension Buildpack for Pivotal 
-Cloud Foundry (PCF).
+Cloud Foundry (Pivotal Platform).
 
 You can either install the buildpacks as a tile in Ops Manager
 or create them individually as separate buildpacks using <code>cf create-buildpack</code> command.
 
 
-## <a id='install-opsmgr'></a> Install and Configure New Relic Dotnet Extension Buildpack for PCF in Ops Manager
+## <a id='install-opsmgr'></a> Install and Configure New Relic Dotnet Extension Buildpack for Pivotal Platform in Ops Manager
 
 To install and configure using Ops Manager, do the following:
 
@@ -21,7 +21,7 @@ GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/rel
 
 1. To add the tile to your staging tile, click **"+"** sign. 
 
-1. Click the **New Relic Dotnet Extension Buildpack for PCF** tile.
+1. Click the **New Relic Dotnet Extension Buildpack for Pivotal Platform** tile.
 
 1. By default all 4 buildpacks are created. If you want to install the buildpacks selectively, do the following: 
     1. Navigate to **Tile Configuration** > **New Relic Buildpack Selection** and select only the buildpacks that you wish to install.
@@ -32,7 +32,7 @@ GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/rel
 
 1. Click **Apply Changes**.
 
-## <a id='install-config'></a> Install and Configure New Relic Dotnet Extension Buildpack for PCF via the cf CLI
+## <a id='install-config'></a> Install and Configure New Relic Dotnet Extension Buildpack for Pivotal Platform via the cf CLI
 
 If you do not want to install the tile, you can download the PIVOTAL file, and install and configure 
 only the buildpacks you need using the cf CLI.
