@@ -80,14 +80,10 @@ The app name for New Relic is determined in the following order:
 
 ### <a id='agent-config'></a> New Relic Agent Configuration File
 
-The New Relic configuration file `newrelic.config` allows you to set a number
-of agent properties and change the behavior of the agent as you want.
-For more infotmation about configuring the agent,
-see [.NET agent configuration](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration).
+The New Relic configuration file `newrelic.config` allows you to set a number of agent properties and change the behavior of the agent as you want. For more infotmation about configuring the agent, see [.NET agent configuration](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration).
 
 
-You can make a copy of this file in the app root directory, and change any of the agent settings.
-The buildpack looks for the agent config file in the following order:
+You can make a copy of this file in the app root directory, and change any of the agent settings. The buildpack looks for the agent config file in the following order:
 
 * App root folder
 * Buildpack folder
@@ -96,10 +92,7 @@ The buildpack looks for the agent config file in the following order:
 
 ### <a id='ups'></a> New Relic User-Provided Service
 
-If the app binds to a user provided service with the word `newrelic` as part of its name,
-the buildpack injects the credentials from this service in the app environment
-by setting environment variable for known New Relic properties.
-The known properties currently are:
+If the app binds to a user provided service with the word `newrelic` as part of its name, the buildpack injects the credentials from this service in the app environment by setting environment variables for known New Relic properties. The known properties currently are:
 
 * `NEW_RELIC_LICNESE_KEY`
 
@@ -307,7 +300,13 @@ You can change the agent logging level and destination.
 	  <log level="info" console="true" />
 ```
 
-## <a id='non-iis'></a> Non-IIS Executable Instrumentation:
+## <a id='custom-instrumentation-xml'></a>Using Custom Instrumentation XML Files
+
+If you need to use New Relic agent's custom instrumentation XML files with your app. All you need to do is to copy the custom instrumentation XML file to the application folder.
+
+<p class="note"><strong>Note:</strong> The buildpack looks for a custom instrumentation file in the application folder with the name of <strong><code>newrelic_instrumentation.xml</code></strong> file.</p>
+
+## <a id='non-iis'></a> Non-IIS Executable Instrumentation
 
 Because Dotnet Framework apps `hwc.exe` is the executable
 running your app, the copy of `newrelic.config` file that comes with the hwc extension
@@ -395,7 +394,7 @@ applications:
 \- name: myapp
 &nbsp; memory: 256M
 &nbsp; buildpacks:
-&nbsp;   \- nr\_dotnetcore\_extension\_buildpack
+&nbsp;   \- nr\_dotnetcore\_extension
 &nbsp;   \- dotnet\_core\_buildpack
 &nbsp; env:
 &nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
@@ -422,7 +421,7 @@ applications:
 \- name: myapp
 &nbsp; memory: 256M  # adjust as needed
 &nbsp; buildpacks:
-&nbsp;   \- nr\_hwc\_extension_buildpack
+&nbsp;   \- nr\_hwc\_extension
 &nbsp;   \- hwc\_buildpack
 &nbsp; env:
 &nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
