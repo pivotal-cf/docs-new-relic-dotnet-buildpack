@@ -14,8 +14,7 @@ or create them individually as separate buildpacks using <code>cf create-buildpa
 
 To install and configure using Ops Manager, do the following:
 
-1. Download the latest version of the tile from [Pivotal Network](https://network.pivotal.io/products/newrelic-dotnet-buildpack) or the New Relic 
-GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/releases).
+1. Download the latest version of the tile from [Pivotal Network](https://network.pivotal.io/products/new-relic-dotnet-buildpack) or the New Relic GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/releases).
 
 1. To upload the product file, navigate to the **Installation Dashboard** in **Ops Manager** and click **Import a Product**.
 
@@ -23,10 +22,14 @@ GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/rel
 
 1. Click the **New Relic Dotnet Extension Buildpack for Pivotal Platform** tile.
 
-1. By default all 4 buildpacks are created. If you want to install the buildpacks selectively, do the following: 
+1. In the **"Assign AZs and Networking"** pane configure the availability zones and network
+
+1. By default all 8 buildpacks are created. If you want to install the buildpacks selectively, do the following: 
     1. Navigate to **Tile Configuration** > **New Relic Buildpack Selection** and select only the buildpacks that you wish to install.
     
     1. Click **Save** on each tab.
+
+1. You can also set the positions of each buildpack in the **"Buildpack Settings"** pane
 
 1. Navigate to **Installation Dashboard** and click **Review Pending Changes**.
 
@@ -47,7 +50,7 @@ GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/rel
 1. To unzip the PIVOTAL file into a separate subdirectory, run the following command: 
 
     ```
-    unzip newrelic-dotnet-buildpack-tile-VERSION-NUMBER.pivotal -d buildpack_tile
+    unzip new-relic-dotnet-buildpack-VERSION_NUMBER.pivotal -d buildpack_tile
     ```
 
 1. To change the directory to <code>buildpack&#95;tile/releases</code>, run the following command:
@@ -68,7 +71,7 @@ GitHub [releases](https://github.com/newrelic/newrelic-dotnet-buildpack-tile/rel
 command: 
 
     ```
-    tar xvf newrelic-dotnet-buildpack-tile-VERSION-NUMBER.tgz -C `SUB-DIR`
+    tar xvf new-relic-dotnet-buildpack-tile-VERSION-NUMBER.tgz -C `SUB-DIR`
     ```
     
     Where `SUB-DIR` is the name of the subdirectory you created. 
@@ -103,37 +106,29 @@ command:
 ### <a id='configure'></a> Configure via the cf CLI
 The buildpacks in the downloaded tile are already built and ready to be used in Cloud Foundry. 
 To make changes to the buildpack or update the cached version of the buildpacks 
-with a newer version of dependencies, you can build a custom copy with the cf CLI and deploy it on 
-Cloud Foundry.
+with a newer (or a specific) version of New Relic agent, you can build a custom copy with the cf CLI and deploy it on Cloud Foundry.
 
 #### <a id='build-deploy'></a> Build the Custom Buildpack 
 
 To build a custom copy of the buildpacks, do the following:
 
-1. To clone the buildpack repo into your local environment, do the following:
-   1. If you want to clone the New Relic Dotnet Core Extension Buildpack, run the following command:
-   
-          ```
-          git clone https://github.com/newrelic/newrelic-dotnetcore-extension-buildpack
-          ```
-    
-  1. If you want to clone New Relic HWC Extension Buildpack, run the following command:
-   
-        ```
-        git clone https://github.com/newrelic/newrelic-hwc-extension-buildpack
-        ```
+1. Clone the buildpack repo into your local environment:
 
-1. To change the directory to the cloned buildpack, do the following:
-    1. If you cloned the New Relic Dotnet Core Extension Buildpack, run the following command:
+      ```
+      git clone https://github.com/newrelic/newrelic-dotnet-buildpack-tile.git
+      cd ewrelic-dotnet-buildpack-tile
+      ```
+
+    1. If you want to clone the New Relic Dotnet Core Extension Buildpack, change directory to **"core-extension"**:
+   
+        ```
+        cd core-extension
+        ```
     
+    1. If you want to clone New Relic HWC Extension Buildpack, change directory to **"hwc-extension"**:
+   
         ```
-        cd newrelic-dotnetcore-extension-buildpack
-        ```
-    
-    1. If you cloned the New Relic HWC Extension Buildpack, run the following command:
-        
-        ```
-        cd newrelic-hwc-extension-buildpack
+        cd hwc-extension
         ```
 
 1. To source the ENVRC file, run the following command:
@@ -151,8 +146,9 @@ To build a custom copy of the buildpacks, do the following:
 1. To build the buildpack, run the following command: 
 
     ```
-    buildpack-packager build [ --cached ] -any-stack
+    buildpack-packager build [ --cached ] -stack STACK_NAME
     ```
+    where **STACK** could be cflinuxfs3, windows, windows2016, windows2012R2
 
 <br/>
 #### <a id='deploy'></a> Deploy Your Application Using the Buildpack
@@ -180,6 +176,7 @@ To deploy the custom buildpack, do the following:
      + `BUILDPACK-NAME-1` is one of New Relic's extension buildpacks for Dotnet Core or Dotnet Framework (HWC).
      + `BUILDPACK-NAME-2` is the name of the standard buildpack (either Dotnet Core or HWC buildpack). <br> <br>
     
+    or you can use an application manifest and use **"buildpacks"** stanza with multiple buildpack names listed.
     <p class="note"><strong>Note:</strong> Because these are extension buildpacks,
        you must specify the main Cloud Foundry buildpack at the end of the chain.</p>
      
