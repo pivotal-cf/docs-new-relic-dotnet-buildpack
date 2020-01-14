@@ -14,13 +14,14 @@ to make it easy and convenient to bind apps to a New Relic service.
 ### <a id='how-it-works'></a> How the New Relic Extension Buildpack for Pivotal Platform Works
 
 The buildpack extensions bind to the New Relic Dotnet agent using one of the following ways depending on the environment:
-
-1. If an environment variable named `NEW_RELIC_DOWNLOAD_URL` is defined in the app environment
+1. If an environment variable named `"NEW_RELIC_DOWNLOAD_URL"` is defined in the app environment
 (manifest file, cf set-env, or set in Apps Manager), its value is used as the location to download the agent.
 This is used for environments where you have your own repository for downloading dependencies (i.e. Artifactory).
-If a second environment variable called `NEW_RELIC_DOWNLOAD_SHA256` is set in the app environment,
+If a second environment variable called `"NEW_RELIC_DOWNLOAD_SHA256"` is set in the app environment,
 it is expected to hold the downloaded agent's binary file SHA256 checksum.
 In this case the SHA256 checksum of the downloaded agent binary file is compared with this value, and in the case of a mismatch, the buildpack reports an error.
+
+1. If you want the buildpack to use a specific version of New Relic agent, you could define an environment variable `"NEW_RELIC_AGENT_VERSION"` with the desired agent version. Please note that if you use both `"NEW_RELIC_DOWNLOAD_URL"` and `"NEW_RELIC_AGENT_VERSION"` together, the version number will be ignored, and only the url will be used.
 
 1. You can create a cached version of the buildpack using the `--cached` switch with New Relic agent embedded in
 the buildpack. This is mainly used in disconnected (isolated) environments where Pivotal Platform does not have access to the
