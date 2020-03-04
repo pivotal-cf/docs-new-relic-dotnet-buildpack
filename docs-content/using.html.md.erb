@@ -1,17 +1,17 @@
 ---
-title: Using New Relic Dotnet Extension Buildpack for Pivotal Platform
+title: Using New Relic Dotnet Extension Buildpack for VMware Tanzu
 owner: Partners
 ---
 
-This topic describes how to use New Relic Dotnet Extension Buildpack for Pivotal Platform.
+This topic describes how to use New Relic Dotnet Extension Buildpack for VMware Tanzu.
 
 
-## <a id='using'></a> About Using New Relic Dotnet Extension Buildpack for Pivotal Platform
+## <a id='using'></a> About Using New Relic Dotnet Extension Buildpack for VMware Tanzu
 
 New Relic extension buildpacks allow you to use Dotnet agents in various ways
 to make it easy and convenient to bind apps to a New Relic service.
 
-### <a id='how-it-works'></a> How the New Relic Extension Buildpack for Pivotal Platform Works
+### <a id='how-it-works'></a> How the New Relic Extension Buildpack for VMware Tanzu Works
 
 The buildpack extensions bind to the New Relic Dotnet agent using one of the following ways depending on the environment:
 1. If an environment variable named `"NEW_RELIC_DOWNLOAD_URL"` is defined in the app environment
@@ -24,7 +24,7 @@ In this case the SHA256 checksum of the downloaded agent binary file is compared
 1. If you want the buildpack to use a specific version of New Relic agent, you could define an environment variable `"NEW_RELIC_AGENT_VERSION"` with the desired agent version. Please note that if you use both `"NEW_RELIC_DOWNLOAD_URL"` and `"NEW_RELIC_AGENT_VERSION"` together, the version number will be ignored, and only the url will be used.
 
 1. You can create a cached version of the buildpack using the `--cached` switch with New Relic agent embedded in
-the buildpack. This is mainly used in disconnected (isolated) environments where Pivotal Platform does not have access to the
+the buildpack. This is mainly used in disconnected (isolated) environments where VMware Tanzu does not have access to the
 outside world, and the buildpack cannot download the agent from New Relic download site.
 
 1. Use a specific version of New Relic agent by specifying the version in the buildpack manifest file at the time of packaging.
@@ -73,7 +73,7 @@ The app name for New Relic is determined in the following order:
 
 * `NEW_RELIC_APP_NAME` env var
 * App name from <code>user-provided</code> service
-* App name from Pivotal Platform (as defined in application manifest)
+* App name from VMware Tanzu (as defined in application manifest)
 
 <p class="note"><strong>Note:</strong> Currently the app name is not used in the
 	<code>newrelic.config</code> file.</p>
@@ -125,7 +125,7 @@ account license key in one of the following ways:
 
 + [Use a License Key Environment Variable](#using-key-env)
 + [Use a local copy of the New Relic Dotnet Agent](#using-local-copy)
-+ [Use New Relic Service Broker for Pivotal Platform](#using-tile)
++ [Use New Relic Service Broker for VMware Tanzu](#using-tile)
 + [Use a User-Provided Service](#using-user)
 + [Use the cf CLI](#using-cli)
 
@@ -146,18 +146,18 @@ In the app manifest file you can then set the `NEW_RELIC_DOWNLOAD_URL` environme
 variable to the location of the agent download.
 
 
-#### <a id='using-tile'></a>Use New Relic Service Broker for Pivotal Platform
+#### <a id='using-tile'></a>Use New Relic Service Broker for VMware Tanzu
 To bind your app to New Relic Dotnet (Core or Framework) agent from the New Relic Service
-Broker for Pivotal Platform, do one of the following:
+Broker for VMware Tanzu, do one of the following:
 
 * From Pivotal Services Marketplace:
 	1. Click **New Relic Service Broker** tile.
 	1. Select the plan that is associated with your New Relic account
-	(check with Pivotal Platform admin).
+	(check with VMware Tanzu admin).
 	1. Specify the instance name.
-	1. If you have your app running on Pivotal Platform, you can specify the app name
+	1. If you have your app running on VMware Tanzu, you can specify the app name
 	as well.
-	1. If you do not have your app running on Pivotal Platform, after you push the app,
+	1. If you do not have your app running on VMware Tanzu, after you push the app,
 	you can directly bind to an existing service instance (or create a new service
 	instance) from the app UI.
 	1. To create the service instance, click **Create**.
@@ -174,7 +174,7 @@ Broker for Pivotal Platform, do one of the following:
 		`MY-APP` is the name of your app.
 
 * From Apps Manager:
-	1. Push your app to Pivotal Platform.
+	1. Push your app to VMware Tanzu.
 	1. In **Apps Manager**, click your app.
 	1. Navigate to **Service**.
 	1. Bind your app to New Relic Service.
@@ -272,7 +272,7 @@ The following are some examples you can use:
 
 - Add New Relic app name:
 
-	If you want the app name in New Relic be different than the app name in Pivotal Platform,
+	If you want the app name in New Relic be different than the app name in VMware Tanzu,
 	add the New Relic app name.
 
 	  ```
@@ -327,10 +327,10 @@ following tag: <br>
 <p class="note"><strong>Note:</strong> Depending on your CI/CD pipeline,
    the app directory may be created on-the-fly as part of the on-the-fly as part of the
    pipeline. If that is the case and you are modifying this file,
-   your pipeline need to copy over the file to the app directory before pushing the app to Pivotal Platform.</p>
+   your pipeline need to copy over the file to the app directory before pushing the app to VMware Tanzu.</p>
 
 
-1. Push your application to Pivotal Platform using this buildpack.
+1. Push your application to VMware Tanzu using this buildpack.
       To do that, edit your `manifest.yml` and add the following entry.
 
 	```
@@ -346,7 +346,7 @@ following tag: <br>
 
 <p class="note"><strong>Note:</strong> If you use Bamboo as your CI/CD pipeline
 	tool, <code>cf push</code> may not be required as your pipeline internally
-	uses <code>cf push</code> to push the app to Pivotal Platform. </p>
+	uses <code>cf push</code> to push the app to VMware Tanzu. </p>
 
 ## <a id='envvar-and-nrconfig'></a>Debugging
 
@@ -366,13 +366,13 @@ to get detailed information about errors and unexpected behavior.
 
 ## <a id='examples'></a>Examples
 
-### <a id='example-dotnet-core'></a>Push a Sample Dotnet Core App to Pivotal Platform
+### <a id='example-dotnet-core'></a>Push a Sample Dotnet Core App to VMware Tanzu
 
 This example does the following:
 
 + Uses the `dotnet` CLI to create a sample Dotnet Core app
 + Configures the app manifest to bind the app with New Relic Dotnet Core agent
-+ Pushes the app to Pivotal Platform.
++ Pushes the app to VMware Tanzu.
 
 The example uses environment variables to specify the license key for the New Relic account.
 
@@ -401,14 +401,14 @@ applications:
 &nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
   </pre>
 
-1. To push the app to Pivotal Platform, run the `cf push` command.
+1. To push the app to VMware Tanzu, run the `cf push` command.
 
 
-### <a id='example-dotnet-framework'></a>Push a Sample Dotnet Framework App to Pivotal Platform
+### <a id='example-dotnet-framework'></a>Push a Sample Dotnet Framework App to VMware Tanzu
 
 The following example shows the steps to configure the app manifest to bind a Dotnet Framework app to the
 New Relic Dotnet Framework agent using the New Relic HWC extension buildpack and the standard Cloud Foundry
-HWC buildpack and to push the app to Pivotal Platform.
+HWC buildpack and to push the app to VMware Tanzu.
 
 The example uses environment variable to specify the license key for the New Relic account.
 
@@ -428,4 +428,4 @@ applications:
 &nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
   </pre>
 
-1. To push the app to Pivotal Platform, run the `cf push` command.
+1. To push the app to VMware Tanzu, run the `cf push` command.

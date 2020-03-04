@@ -1,38 +1,38 @@
 ---
-title: New Relic Dotnet Extension Buildpack for Pivotal Platform
+title: New Relic Dotnet Extension Buildpack for VMware Tanzu
 owner: Partners
 ---
 
 <strong><%= modified_date %></strong>
 
-This documentation describes the New Relic Dotnet Extension Buildpack for Pivotal Platform and provides instructions on how to install the tile. The tile can bind New Relic agents to Dotnet
- Core or Dotnet Framework apps so you can monitor them in a Pivotal Platform environment.
+This documentation describes the New Relic Dotnet Extension Buildpack for VMware Tanzu and provides instructions on how to install the tile. The tile can bind New Relic agents to Dotnet
+ Core or Dotnet Framework apps so you can monitor them in a VMware Tanzu environment.
 
 <br/>
 <center>
-    <img src="images/nr-black-256x256.png" alt="New Relic Dotnet Extension Buildpack for Pivotal Platform Logo" height="150" width="150"/>
+    <img src="images/nr-black-256x256.png" alt="New Relic Dotnet Extension Buildpack for VMware Tanzu Logo" height="150" width="150"/>
 </center>
 
 
 ## <a id='overview'></a> Overview
 
-The New Relic Dotnet Extension Buildpack for Pivotal Platform enables you to bind your Dotnet (Core and Framework) apps to New Relic Dotnet agents. This allows you to monitor the health and performance of these apps, analyze the data captured by agents, and additionally correlate the captured agent data with Pivotal Platform infrastructure metrics and events collected by the [New Relic Firehose Nozzle](https://network.pivotal.io/products/nr-firehose-nozzle/).
+The New Relic Dotnet Extension Buildpack for VMware Tanzu enables you to bind your Dotnet (Core and Framework) apps to New Relic Dotnet agents. This allows you to monitor the health and performance of these apps, analyze the data captured by agents, and additionally correlate the captured agent data with VMware Tanzu infrastructure metrics and events collected by the [New Relic Firehose Nozzle](https://network.pivotal.io/products/nr-firehose-nozzle/).
 
-The New Relic Dotnet Extension Buildpack for Pivotal Platform can be installed via the tile in Ops Manager. Alternatively, you can extract the <code>.Pivotal</code> file and install individual extension buildpacks using the cf Command Line Interface (CLI) command <code>cf create-buildpack</code>.
+The New Relic Dotnet Extension Buildpack for VMware Tanzu can be installed via the tile in Ops Manager. Alternatively, you can extract the <code>.Pivotal</code> file and install individual extension buildpacks using the cf Command Line Interface (CLI) command <code>cf create-buildpack</code>.
 
 After you start monitoring your apps, you can set alerts based on any metrics
 that are collected by Dotnet agents using the New Relic alerting subsystem.
 
-The New Relic Dotnet Extension Buildpack for Pivotal Platform installs one or more of the
+The New Relic Dotnet Extension Buildpack for VMware Tanzu installs one or more of the
 following buildpacks depending on the tile configuration (total of 8 extension buildpacks):
 
 + New Relic Dotnet Core Extension Buildpack for Dotnet Core Applications running on Ubuntu Xenial 16.04 stacks. This extension buildpack is non-cached.
 
-+ New Relic Dotnet Core Extension Cached Buildpack for Dotnet Core Applications running on Ubuntu Xenial 16.04 in disconnected (isolated) Pivotal Platform deployments. This is for support of air-gapped environments where there is no access to the outside world.
++ New Relic Dotnet Core Extension Cached Buildpack for Dotnet Core Applications running on Ubuntu Xenial 16.04 in disconnected (isolated) VMware Tanzu deployments. This is for support of air-gapped environments where there is no access to the outside world.
 
 + 3 New Relic HWC Extension Buildpacks for Dotnet Framework Applications running on Windows 2012 R2 , Windows 2016, and Windows 2019 stacks. This extension buildpack is non-cached.
 
-+ 3 New Relic HWC Extension Cached Buildpacks for Dotnet Framework Applications running on Windows 2012 R2 , Windows 2016, and Windows 2019 stacks in disconnected (isolated) Pivotal Platform deployments. This is for support of air-gapped environments where there is no access to the outside world.
++ 3 New Relic HWC Extension Cached Buildpacks for Dotnet Framework Applications running on Windows 2012 R2 , Windows 2016, and Windows 2019 stacks in disconnected (isolated) VMware Tanzu deployments. This is for support of air-gapped environments where there is no access to the outside world.
 
 All buildpacks use the multi-buildpack approach of Cloud Foundry and require either the standard 
 Dotnet Core buildpack or HWC buildpack to be specified as the last buildpack in the buildpack chain, either in the app manifest or in the <code>cf push</code> command line.
@@ -42,7 +42,7 @@ Dotnet Core buildpack or HWC buildpack to be specified as the last buildpack in 
 
 ## <a id="snapshot"></a> Product Snapshot
 
-The following table provides version and version-support information about New Relic Dotnet Extension Buildpack for Pivotal Platform.
+The following table provides version and version-support information about New Relic Dotnet Extension Buildpack for VMware Tanzu.
 
 <table class="nice">
     <th>Element</th>
@@ -64,7 +64,7 @@ The following table provides version and version-support information about New R
         <td>2.5, 2.6, 2.7, and 2.8</td>
     </tr>
     <tr>
-        <td>Compatible Pivotal Application Service versions</td>
+        <td>Compatible VMware Tanzu Application Service for VMs versions</td>
         <td>2.5, 2.6, 2.7, and 2.8</td>
     </tr>
     <tr>
@@ -79,12 +79,12 @@ The following table provides version and version-support information about New R
 
 ## <a id='compatibility'></a> Compatibility
 
-This product has been tested and is compatible with Pivotal Platform versions up to and including v2.8.
+This product has been tested and is compatible with VMware Tanzu versions up to and including v2.8.
 
 
 ## <a id="reqs"></a> Requirements
 
-New Relic Dotnet Extension Buildpack for Pivotal Platform requires the following:
+New Relic Dotnet Extension Buildpack for VMware Tanzu requires the following:
 
 * An active New Relic account with a license key. This is used to bind Dotnet apps to New Relic Dotnet agents.
 
