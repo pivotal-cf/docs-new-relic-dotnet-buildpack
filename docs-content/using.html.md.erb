@@ -93,13 +93,15 @@ You can make a copy of this file in the app root directory, and change any of th
 
 ### <a id='ups'></a> New Relic User-Provided Service
 
-If the app binds to a user provided service with the word `newrelic` as part of its name, the buildpack injects the credentials from this service in the app environment by setting environment variables for known New Relic properties. The known properties currently are:
+If the app binds to a user provided service with the word `newrelic` as part of its name, the buildpack injects the credentials from this service in the app environment by setting these credentials as environment variables before starting the app.
 
-* `NEW_RELIC_LICNESE_KEY`
+* If the credential starts with prefix "new\_relic\_", the buildpack ensures the environment variable name is all in upper case.
 
-* `NEW_RELIC_APP_NAME`
+* Certain credentials without "NEW\_RELIC\_" prefix qualify as New Relic environment variables and are translated by the buildpack:
 
-* `NEW_RELIC_DISTRIBUTED_TRACING_ENABLED`
+	+ upper or lower case license\_key, licensekey would translate to "NEW\_RELIC\_LICENSE\_KEY"
+	+ upper or lower case app\_name, appname would translate to "NEW\_RELIC\_APP\_NAME"
+	+ upper or lower case distributed\_tracing, distributedtracing would translate to "NEW_RELIC\_DISTRIBUTED\_TRACING\_ENABLED"
 
 
 ### <a id='proxy'></a> Use of Proxy
@@ -402,6 +404,13 @@ applications:
   </pre>
 
 1. To push the app to VMware Tanzu, run the `cf push` command.
+
+1. To [pin the .NET Core SDK to a specific version or version line](https://docs.cloudfoundry.org/buildpacks/dotnet-core/index.html#-specify-.net-core-sdks), create a buildpack.yml file at the app root and add your SDK version:
+
+	```
+ 	dotnet-core:
+		sdk: 5.x
+	```
 
 
 ### <a id='example-dotnet-framework'></a>Push a Sample Dotnet Framework App to VMware Tanzu
