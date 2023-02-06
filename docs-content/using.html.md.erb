@@ -172,8 +172,7 @@ Broker for VMware Tanzu, do one of the following:
 		cf restage MY-APP
 		```
 
-		Where:
-		`MY-APP` is the name of your app.
+		Where `MY-APP` is the name of your app.
 
 * From Apps Manager:
 	1. Push your app to VMware Tanzu.
@@ -198,8 +197,7 @@ Broker for VMware Tanzu, do one of the following:
 		cf restage MY-APP
 		```
 
-		Where:
-		`MY-APP` is the name of your app.
+		Where `MY-APP` is the name of your app.
 
 #### <a id='using-user'></a>Use a User-Provided Service
 1. Create a user-provided service with `newrelic` as part of the service name.
@@ -209,15 +207,17 @@ Broker for VMware Tanzu, do one of the following:
     cf cups MY-NEWRELIC-SVCc -p "licenseKey,appName"
     ```
 
-    Where `MY-NEWRELIC-SVC` is the name of your user-provided service. <br><br>
+    Where `MY-NEWRELIC-SVC` is the name of your user-provided service.
 
-    You are prompted to enter values for licenseKey and appName.<br><br>
+    You are prompted to enter values for licenseKey and appName.
+
 	+ `licenseKey`. This is the New Relic license key.
 	+ (Optional) `appName`. If you want to change the app name in New Relic
 	use this property.
 
 
 1. To push your app, do one of the following:
+
 	+ Before pushing your app, add the user-provided service to the app
 	`manifest.yml`.
 	+ Bind an existing service instance and then restage the app.
@@ -231,8 +231,10 @@ Broker for VMware Tanzu, do one of the following:
 	```
 
 	Where:
+
 	+ `NEWRELIC-PLAN-NAME` is the name of your New Relic service plan.
 	+ `NEWRELIC-SERVICE-INSTANCE-NAME` is the name of your New Relic service instance.
+
 1. Specify the service instance name in the `services` section of the app
 `manifest.yml` file. Indent the section by two spaces.<br><br>
  For example:
