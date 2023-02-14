@@ -111,13 +111,14 @@ the `newrelic.config`file of the agent in the app directory,
 and specify the proxy information as a child of the `service` element
 For more information about proxy settings, see
 [Proxy element](https://docs.newrelic.com/docs/agents/net-agent/configuration/net-agent-configuration#proxy).
-<br/><br/>
+
 For example:
-<pre>
-	&lt;service licenseKey="0123456789abcdef0123456789abcdef01234567"&gt;
-	  &lt;proxy host="my.proxy.address" port="proxy.port" /&gt;
-	&lt;/service&gt;
-</pre>
+
+```
+&lt;service licenseKey="0123456789abcdef0123456789abcdef01234567"&gt;
+  &lt;proxy host="my.proxy.address" port="proxy.port" /&gt;
+&lt;/service&gt;
+```
 
 
 ### <a id='using-nr-agent'></a>Bind Your App to the New Relic Agent
@@ -394,16 +395,18 @@ The example uses environment variables to specify the license key for the New Re
 	```
 
 1. Create a manifest.yml file for the app.<br/>
-  <pre>---
-applications:
-\- name: myapp
-&nbsp; memory: 256M
-&nbsp; buildpacks:
-&nbsp;   \- nr\_dotnetcore\_extension
-&nbsp;   \- dotnet\_core\_buildpack
-&nbsp; env:
-&nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
-  </pre>
+
+  ```
+  ---
+  applications:
+  \- name: myapp
+  &nbsp; memory: 256M
+  &nbsp; buildpacks:
+  &nbsp;   \- nr\_dotnetcore\_extension
+  &nbsp;   \- dotnet\_core\_buildpack
+  &nbsp; env:
+  &nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
+  ```
 
 1. To push the app to VMware Tanzu, run the `cf push` command.
 
@@ -428,15 +431,17 @@ The example uses environment variable to specify the license key for the New Rel
 1. Test the app locally and make sure it runs with no errors.
 
 1. Create a `manifest.yml` file for the app.
-  <pre>---
-applications:
-\- name: myapp
-&nbsp; memory: 256M  # adjust as needed
-&nbsp; buildpacks:
-&nbsp;   \- nr\_hwc\_extension
-&nbsp;   \- hwc\_buildpack
-&nbsp; env:
-&nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
-  </pre>
+
+  ```
+  ---
+  applications:
+  \- name: myapp
+  &nbsp; memory: 256M  # adjust as needed
+  &nbsp; buildpacks:
+  &nbsp;   \- nr\_hwc\_extension
+  &nbsp;   \- hwc\_buildpack
+  &nbsp; env:
+  &nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
+  ```
 
 1. To push the app to VMware Tanzu, run the `cf push` command.
