@@ -95,13 +95,13 @@ You can make a copy of this file in the app root directory, and change any of th
 
 If the app binds to a user provided service with the word `newrelic` as part of its name, the buildpack injects the credentials from this service in the app environment by setting these credentials as environment variables before starting the app.
 
-* If the credential starts with prefix "new\_relic\_", the buildpack ensures the environment variable name is all in upper case.
+* If the credential starts with prefix "new_relic_", the buildpack ensures the environment variable name is all in upper case.
 
-* Certain credentials without "NEW\_RELIC\_" prefix qualify as New Relic environment variables and are translated by the buildpack:
+* Certain credentials without "NEW_RELIC_" prefix qualify as New Relic environment variables and are translated by the buildpack:
 
-	+ upper or lower case license\_key, licensekey would translate to "NEW\_RELIC\_LICENSE\_KEY"
-	+ upper or lower case app\_name, appname would translate to "NEW\_RELIC\_APP\_NAME"
-	+ upper or lower case distributed\_tracing, distributedtracing would translate to "NEW_RELIC\_DISTRIBUTED\_TRACING\_ENABLED"
+	+ upper or lower case license_key, licensekey would translate to "NEW_RELIC_LICENSE_KEY"
+	+ upper or lower case app_name, appname would translate to "NEW_RELIC_APP_NAME"
+	+ upper or lower case distributed_tracing, distributedtracing would translate to "NEW_RELIC_DISTRIBUTED_TRACING_ENABLED"
 
 
 ### <a id='proxy'></a> Use of Proxy
@@ -399,13 +399,13 @@ The example uses environment variables to specify the license key for the New Re
   ```
   ---
   applications:
-  \- name: myapp
-  &nbsp; memory: 256M
-  &nbsp; buildpacks:
-  &nbsp;   \- nr\_dotnetcore\_extension
-  &nbsp;   \- dotnet\_core\_buildpack
-  &nbsp; env:
-  &nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
+  - name: myapp
+    memory: 256M
+    buildpacks:
+      - nr_dotnetcore_extension
+      - dotnet_core_buildpack
+    env:
+      NEW_RELIC_LICENSE_KEY: 0123456789abcdef0123456789abcdef01234567
   ```
 
 1. To push the app to VMware Tanzu, run the `cf push` command.
@@ -435,13 +435,13 @@ The example uses environment variable to specify the license key for the New Rel
   ```
   ---
   applications:
-  \- name: myapp
-  &nbsp; memory: 256M  # adjust as needed
-  &nbsp; buildpacks:
-  &nbsp;   \- nr\_hwc\_extension
-  &nbsp;   \- hwc\_buildpack
-  &nbsp; env:
-  &nbsp;   NEW\_RELIC\_LICENSE\_KEY: 0123456789abcdef0123456789abcdef01234567
+  - name: myapp
+    memory: 256M  # adjust as needed
+    buildpacks:
+      - nr_hwc_extension
+      - hwc_buildpack
+    env:
+      NEW_RELIC_LICENSE_KEY: 0123456789abcdef0123456789abcdef01234567
   ```
 
 1. To push the app to VMware Tanzu, run the `cf push` command.
