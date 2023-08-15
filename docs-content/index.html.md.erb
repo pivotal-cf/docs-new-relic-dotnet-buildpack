@@ -26,13 +26,13 @@ that are collected by Dotnet agents using the New Relic alerting subsystem.
 The New Relic Dotnet Extension Buildpack for VMware Tanzu installs one or more of the
 following buildpacks depending on the tile configuration (total of 8 extension buildpacks):
 
-+ New Relic Dotnet Core Extension Buildpack for Dotnet Core Applications running on Ubuntu Xenial 16.04 stacks. This extension buildpack is non-cached.
++ New Relic Dotnet Core Extension Buildpack for Dotnet Core Applications running on Ubuntu Jammy 1.* stacks. This extension buildpack is non-cached.
 
-+ New Relic Dotnet Core Extension Cached Buildpack for Dotnet Core Applications running on Ubuntu Xenial 16.04 in disconnected (isolated) VMware Tanzu deployments. This is for support of air-gapped environments where there is no access to the outside world.
++ New Relic Dotnet Core Extension Cached Buildpack for Dotnet Core Applications running on Ubuntu Jammy 1.* in disconnected (isolated) VMware Tanzu deployments. This is for support of air-gapped environments where there is no access to the outside world.
 
-+ 3 New Relic HWC Extension Buildpacks for Dotnet Framework Applications running on Windows 2012 R2 , Windows 2016, and Windows 2019 stacks. This extension buildpack is non-cached.
++ 3 New Relic HWC Extension Buildpacks for Dotnet Framework Applications running on Windows 2019 stacks. This extension buildpack is non-cached.
 
-+ 3 New Relic HWC Extension Cached Buildpacks for Dotnet Framework Applications running on Windows 2012 R2 , Windows 2016, and Windows 2019 stacks in disconnected (isolated) VMware Tanzu deployments. This is for support of air-gapped environments where there is no access to the outside world.
++ 3 New Relic HWC Extension Cached Buildpacks for Dotnet Framework Applications running on Windows 2019 stacks in disconnected (isolated) VMware Tanzu deployments. This is for support of air-gapped environments where there is no access to the outside world.
 
 All buildpacks use the multi-buildpack approach of Cloud Foundry and require either the standard 
 Dotnet Core buildpack or HWC buildpack to be specified as the last buildpack in the buildpack chain, either in the app manifest or in the <code>cf push</code> command line.
@@ -49,15 +49,15 @@ The following table provides version and version-support information about New R
     <th>Details</th>
     <tr>
         <td>Tile version</td>
-        <td>1.1.11</td>
+        <td>1.1.12</td>
     </tr>
     <tr>
         <td>Release date</td>
-        <td>July 24, 2023</td>
+        <td>August 15, 2023</td>
     </tr>
     <tr>
         <td>Software component version</td>
-        <td>New Relic Dotnet Extension Buildpack 1.1.11</td>
+        <td>New Relic Dotnet Extension Buildpack 1.1.12</td>
     </tr>
     <tr>
         <td>Compatible Ops Manager version(s)</td>
@@ -69,7 +69,7 @@ The following table provides version and version-support information about New R
     </tr>
     <tr>
         <td>BOSH stemcell version</td>
-        <td>Ubuntu Xenial</td>
+        <td>Ubuntu Jammy</td>
     </tr>
     <tr>
         <td>IaaS support</td>
